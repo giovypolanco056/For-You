@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛠 Organizador del Álbum</title>
+<style>
+  :root {
+    --bg: #16101c; --panel: #221830; --ink: #f3e6cf; --accent: #f06292;
+    --gold: #f0d98c; --line: rgba(240,217,140,0.2);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Segoe UI', system-ui, sans-serif; padding: 20px;
+  }
+  h1 { color: var(--gold); font-size: 1.4rem; margin: 0 0 4px; }
+  .sub { color: rgba(243,230,207,0.6); font-size: 0.9rem; margin-bottom: 18px; }
+  .instructions {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px; font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px;
+  }
+  .instructions b { color: var(--gold); }
+  .toolbar {
+    position: sticky; top: 0; z-index: 10; background: var(--bg);
+    padding: 10px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    border-bottom: 1px solid var(--line); margin-bottom: 16px;
+  }
+  button {
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 18px; font-size: 0.95rem; cursor: pointer; font-weight: 600;
+  }
+  button.secondary { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); }
+  button:hover { filter: brightness(1.15); }
+  .status { font-size: 0.85rem; color: #7CFC7C; }
+  h2.section-title {
+    color: var(--gold); font-size: 1.05rem; margin: 26px 0 10px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .count { color: rgba(243,230,207,0.5); font-weight: 400; font-size: 0.85rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .card img {
+    width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; background: #333;
+  }
+  .card select, .card input, .card textarea {
+    width: 100%; background: #16101c; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; font-size: 0.8rem;
+  }
+  .card select { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .card textarea { resize: vertical; min-height: 34px; font-family: inherit; }
+  .fname { font-size: 0.62rem; color: rgba(243,230,207,0.35); word-break: break-all; }
+  dialog {
+    background: var(--panel); color: var(--ink); border: 1px solid var(--gold);
+    border-radius: 12px; max-width: 700px; width: 92vw; padding: 20px;
+  }
+  dialog textarea { width: 100%; height: 300px; background: #0d0a12; color: #b8e0b8;
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px; font-size: 0.72rem; }
+  ::backdrop { background: rgba(0,0,0,0.7); }
+</style>
+</head>
+<body>
+  <h1>🛠 Organizador del Álbum</h1>
+  <p class="sub">Herramienta privada — no está enlazada desde la página principal.</p>
+
+  <div class="instructions">
+    <b>Cómo usarlo:</b><br>
+    1. Cambia la <b>categoría</b> de cualquier foto con su selector (se va al final de esa categoría).<br>
+    2. Edita la <b>fecha</b> y la <b>historia</b> de las fotos que quieras.<br>
+    3. Tus cambios se guardan solos en este navegador (borrador local).<br>
+    4. Al terminar pulsa <b>“Copiar configuración”</b> y pégale el bloque a Claude
+    (o reemplaza tú mismo el bloque <code>sections: [...]</code> del álbum en
+    <code>visual-novel/js/library.js</code>). Los cambios <b>no se publican solos</b>.
+  </div>
+
+  <div class="toolbar">
+    <button id="btn-export">📋 Copiar configuración</button>
+    <button id="btn-download" class="secondary">💾 Descargar .txt</button>
+    <button id="btn-reset" class="secondary">↺ Descartar borrador</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div id="app">Cargando fotos...</div>
+
+  <dialog id="export-dialog">
+    <h2 style="margin-top:0;color:var(--gold);">Bloque generado</h2>
+    <p style="font-size:0.85rem;">Cópialo y pégaselo a Claude, o reemplaza el bloque
+    <code>sections: [...]</code> del libro "Nuestro Álbum" en <code>visual-novel/js/library.js</code>.</p>
+    <textarea id="export-text" readonly></textarea>
+    <div style="text-align:right;margin-top:10px;">
+      <button onclick="document.getElementById('export-dialog').close()">Cerrar</button>
+    </div>
+  </dialog>
+
+  <script src="visual-novel/js/library.js"></script>
+  <script>
+  (function () {
+    const DRAFT_KEY = 'organizador_draft_v1';
+    const albumBook = LIBRARY_CONFIG.books.find(b => b.id === 'album');
+    const statusEl = document.getElementById('status');
+
+    // Estado: lista de secciones {name, photos:[{src,date,story}]}
+    let sections;
+
+    // Cargar borrador local o partir de la config actual
+    const draft = localStorage.getItem(DRAFT_KEY);
+    if (draft) {
+      try { sections = JSON.parse(draft); setStatus('Borrador local cargado.'); }
+      catch (e) { sections = null; }
+    }
+    if (!sections) {
+      sections = albumBook.sections.map(s => ({
+        name: s.name,
+        photos: s.photos.map(p => ({ src: p.src, date: p.date || '', story: p.story || '' })),
+      }));
+    }
+
+    function setStatus(msg) {
+      statusEl.textContent = msg;
+      clearTimeout(setStatus._t);
+      setStatus._t = setTimeout(() => statusEl.textContent = '', 3000);
+    }
+
+    function save() {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(sections));
+      setStatus('Guardado ✓');
+    }
+
+    /* ── Render ── */
+    const app = document.getElementById('app');
+
+    function thumbSrc(src) {
+      // Las rutas de la config son relativas a visual-novel/; aquí estamos en la raíz
+      return encodeURI(src.replace(/^\.\.\//, ''));
+    }
+
+    function render() {
+      app.innerHTML = '';
+      sections.forEach((sec, si) => {
+        const h = document.createElement('h2');
+        h.className = 'section-title';
+        h.innerHTML = `${sec.name} <span class="count">(${sec.photos.length} fotos)</span>`;
+        app.appendChild(h);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        sec.photos.forEach((photo, pi) => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          const img = document.createElement('img');
+          img.loading = 'lazy';
+          img.src = thumbSrc(photo.src);
+          img.onerror = () => { img.style.opacity = 0.2; };
+          card.appendChild(img);
+
+          const sel = document.createElement('select');
+          sections.forEach((s2, i2) => {
+            const opt = document.createElement('option');
+            opt.value = i2;
+            opt.textContent = s2.name;
+            if (i2 === si) opt.selected = true;
+            sel.appendChild(opt);
+          });
+          sel.addEventListener('change', () => {
+            const target = parseInt(sel.value, 10);
+            sec.photos.splice(pi, 1);
+            sections[target].photos.push(photo);
+            save();
+            render();
+          });
+          card.appendChild(sel);
+
+          const date = document.createElement('input');
+          date.placeholder = 'fecha (ej: mayo 2026)';
+          date.value = photo.date;
+          date.addEventListener('input', () => { photo.date = date.value; save(); });
+          card.appendChild(date);
+
+          const story = document.createElement('textarea');
+          story.placeholder = 'historia de esta foto...';
+          story.value = photo.story;
+          story.addEventListener('input', () => { photo.story = story.value; save(); });
+          card.appendChild(story);
+
+          const fn = document.createElement('div');
+          fn.className = 'fname';
+          fn.textContent = decodeURI(photo.src.split('/').pop());
+          card.appendChild(fn);
+
+          grid.appendChild(card);
+        });
+
+        app.appendChild(grid);
+      });
+    }
+
+    /* ── Exportar el bloque sections ── */
+    function generateBlock() {
+      const esc = s => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+      const L = ['      sections: ['];
+      sections.forEach(sec => {
+        L.push('        {');
+        L.push(`          name: "${esc(sec.name)}",`);
+        L.push('          photos: [');
+        sec.photos.forEach(p => {
+          L.push(`            { src: "${esc(p.src)}", date: "${esc(p.date)}", story: "${esc(p.story)}" },`);
+        });
+        L.push('          ],');
+        L.push('        },');
+      });
+      L.push('      ],');
+      return L.join('\n');
+    }
+
+    document.getElementById('btn-export').addEventListener('click', () => {
+      const block = generateBlock();
+      document.getElementById('export-text').value = block;
+      document.getElementById('export-dialog').showModal();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(block).then(
+          () => setStatus('Copiado al portapapeles ✓'),
+          () => {}
+        );
+      }
+    });
+
+    document.getElementById('btn-download').addEventListener('click', () => {
+      const blob = new Blob([generateBlock()], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'album-sections.txt';
+      a.click();
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      if (confirm('¿Descartar el borrador local y volver a la configuración publicada?')) {
+        localStorage.removeItem(DRAFT_KEY);
+        location.reload();
+      }
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>

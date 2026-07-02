@@ -14,6 +14,20 @@ const LIBRARY_CONFIG = {
     subtitle: "Elige un libro. Cada uno guarda algo de nosotros.",
   },
 
+  /* ── Los conejitos ocultos 🐇 ─────────────────────────────────
+     Hay 5 conejitos negros escondidos en la biblioteca.
+     Si los encuentra todos, aparece una escena especial. */
+  rabbitHunt: {
+    sprite: "assets/sprites/Bunny_Me.png",
+    ids: ["estante", "album", "manual", "disco", "razones"],
+    lines: [
+      "Hola... así que encontraste los conejitos.",
+      "No quise despertarte tristeza ni nada parecido, pero quiero expresar lo mucho que me duele no haberle conocido.",
+      "Seguro le hubiera acariciado mucho y nos llevaríamos bien...",
+      "Era un gran conejo. Y ha de estar dando saltitos en el cielo, amando todo lo que hiciste por él.",
+    ],
+  },
+
   /* ==============================================================
      LIBROS
      Cada libro tiene:
@@ -463,13 +477,14 @@ const LIBRARY_CONFIG = {
       // Apariencia: blanco con bordes dorados
       appearance: { c1: "#efe9dc", c2: "#d8cfb8", ink: "#8a6d2f", w: 128, h: 200 },
 
-      warning: "No abrir hasta haber vivido más.\n¿Quieres asomarte de todas formas?",
+      // ► Cada capítulo se desbloquea un sábado (año, mes-1, día).
+      //   Antes de su fecha aparece cerrado con candado.
       chapters: [
-        { title: "Capítulo 9",  body: "Nuestro segundo aniversario." },
-        { title: "Capítulo 10", body: "Nuestra primera Navidad en casa." },
-        { title: "Capítulo 11", body: "El día que cumplimos la promesa." },
-        { title: "Capítulo 12", body: "Lo logramos." },
-        { title: "Capítulo 13", body: "Todavía nosotros." },
+        { title: "Capítulo 9",  body: "Nuestro segundo aniversario.",     unlock: new Date(2026, 6, 11) },
+        { title: "Capítulo 10", body: "Nuestra primera Navidad en casa.", unlock: new Date(2026, 6, 18) },
+        { title: "Capítulo 11", body: "El día que cumplimos la promesa.", unlock: new Date(2026, 6, 25) },
+        { title: "Capítulo 12", body: "Lo logramos.",                     unlock: new Date(2026, 7, 1)  },
+        { title: "Capítulo 13", body: "Todavía nosotros.",                unlock: new Date(2026, 7, 8)  },
       ],
     },
 
@@ -483,16 +498,23 @@ const LIBRARY_CONFIG = {
       // Apariencia: negro con candado dorado
       appearance: { c1: "#17171c", c2: "#050508", ink: "#f0d98c", w: 122, h: 188, lock: true },
 
+      // ► Tipos de requisito:
+      //   "rabbits" → se marca solo al encontrar los 5 conejitos
+      //   "date"    → se marca solo cuando llegue unlockDate
+      //   "manual"  → ella puede marcarlo tocándolo (queda guardado)
+      //   "always"  → siempre está marcado
       requirements: [
-        "Tiempo",
-        "Paciencia",
-        "Amor",
-        "Fe",
-        "Elegirse todos los días",
+        { id: "conejos",  type: "rabbits", label: "Encontrar los 5 conejitos ocultos" },
+        { id: "fecha",    type: "date",    label: "Que sea el 7 de diciembre" },
+        { id: "botanico", type: "manual",  label: "Ir juntos al Jardín Botánico" },
+        { id: "cine",     type: "manual",  label: "Ir juntos al cine" },
+        { id: "fotos50",  type: "manual",  label: "Tomarnos 50 fotos" },
+        { id: "serie",    type: "manual",  label: "Ver una serie juntos" },
+        { id: "amarnos",  type: "always",  label: "Que nos amemos" },
       ],
       note: "Este libro se abrirá cuando llegue el momento.",
-      // Fecha de desbloqueo: 8 de agosto de 2026 (año, mes-1, día)
-      unlockDate: new Date(2026, 7, 8, 0, 0, 0),
+      // Fecha de desbloqueo: 7 de diciembre de 2026 (año, mes-1, día)
+      unlockDate: new Date(2026, 11, 7, 0, 0, 0),
       // Mensaje cuando ya esté desbloqueado:
       unlockedContent: "Llegó el momento.\n\n(Aquí irá lo que este libro guardaba para ti.)",
     },
@@ -512,6 +534,24 @@ const LibraryEngine = (() => {
   let audioEl     = null;
   let spinningVinyl = null;
 
+  /* ── Progreso guardado (conejitos y casillas) ──────────────── */
+  const Progress = {
+    get(key, fallback) {
+      try {
+        const v = localStorage.getItem('foryou_' + key);
+        return v === null ? fallback : JSON.parse(v);
+      } catch (e) { return fallback; }
+    },
+    set(key, value) {
+      try { localStorage.setItem('foryou_' + key, JSON.stringify(value)); } catch (e) {}
+    },
+  };
+
+  function rabbitsFound()  { return Progress.get('rabbits', []); }
+  function allRabbitsFound() {
+    return rabbitsFound().length >= (LIBRARY_CONFIG.rabbitHunt.ids || []).length;
+  }
+
   /* ── Revelar la biblioteca ─────────────────────────────────── */
   function reveal() {
     if (revealed) return;
@@ -524,6 +564,11 @@ const LibraryEngine = (() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => scene.classList.add('visible'));
     });
+
+    // Si encontró los 5 conejitos pero la escena quedó pendiente
+    if (allRabbitsFound() && !Progress.get('bunny_scene_seen', false)) {
+      setTimeout(() => playBunnyScene(), 4000);
+    }
   }
 
   /* ── Construir la escena (estante) ─────────────────────────── */
@@ -558,6 +603,12 @@ const LibraryEngine = (() => {
 
       const board = document.createElement('div');
       board.className = 'library-board';
+
+      // Conejito oculto #1: sentado sobre la última tabla del estante
+      if (i + perShelf >= LIBRARY_CONFIG.books.length) {
+        placeRabbit(board, 'estante',
+          'position:absolute;bottom:100%;right:9%;');
+      }
 
       wrap.appendChild(shelf);
       wrap.appendChild(board);
@@ -619,7 +670,7 @@ const LibraryEngine = (() => {
       case 'records': openReader(book, renderRecords(book), 'lib-record-panel-wrap'); break;
       case 'error':   openError(book); break;
       case 'reasons': openReader(book, renderReasons(book), 'lib-reasons-wrap'); break;
-      case 'future':  openFuture(book); break;
+      case 'future':  openReader(book, renderChapters(book, true)); break;
       case 'locked':  openLocked(book); break;
     }
   }
@@ -724,6 +775,12 @@ const LibraryEngine = (() => {
       });
     });
 
+    // Conejito oculto #2: al final del álbum
+    const rabbitSpot = document.createElement('div');
+    rabbitSpot.className = 'lib-rabbit-spot';
+    placeRabbit(rabbitSpot, 'album', '');
+    wrap.appendChild(rabbitSpot);
+
     return wrap;
   }
 
@@ -751,9 +808,19 @@ const LibraryEngine = (() => {
   }
 
   /* ── Libros 3 y 7: Capítulos (acordeón) ────────────────────── */
+
+  const MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                    'agosto','septiembre','octubre','noviembre','diciembre'];
+  const DIAS_ES  = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+
+  function fechaBonita(d) {
+    return `${DIAS_ES[d.getDay()]} ${d.getDate()} de ${MESES_ES[d.getMonth()]}`;
+  }
+
   function renderChapters(book, isFuture) {
     const wrap = document.createElement('div');
     wrap.className = 'lib-paper';
+    const now = new Date();
 
     let html = `
       <h2 class="lib-reader-title">${esc(book.title)}</h2>
@@ -761,27 +828,57 @@ const LibraryEngine = (() => {
       <ul class="lib-chapter-list">
     `;
     (book.chapters || []).forEach((ch, i) => {
-      const body = ch.body && ch.body.trim()
-        ? esc(ch.body)
-        : `<span style="opacity:.5;">Próximamente...</span>`;
-      html += `
-        <li class="lib-chapter">
-          <div class="lib-chapter-head">
-            <span class="lib-chapter-num">${i + 1}</span>
-            <span>${esc(ch.title)}</span>
-            <span class="lib-chapter-arrow">▶</span>
-          </div>
-          <div class="lib-chapter-body"><div class="lib-chapter-body-inner">${body}</div></div>
-        </li>`;
+      const locked = ch.unlock && now < ch.unlock;
+      if (locked) {
+        // Capítulo bloqueado: candado + fecha en la que se abre
+        html += `
+          <li class="lib-chapter lib-chapter-locked">
+            <div class="lib-chapter-head">
+              <span class="lib-chapter-num">🔒</span>
+              <span>${esc(ch.title)}</span>
+              <span class="lib-chapter-date">se abre el ${fechaBonita(ch.unlock)}</span>
+            </div>
+          </li>`;
+      } else {
+        const body = ch.body && ch.body.trim()
+          ? esc(ch.body)
+          : `<span style="opacity:.5;">Próximamente...</span>`;
+        html += `
+          <li class="lib-chapter">
+            <div class="lib-chapter-head">
+              <span class="lib-chapter-num">${i + 1}</span>
+              <span>${esc(ch.title)}</span>
+              <span class="lib-chapter-arrow">▶</span>
+            </div>
+            <div class="lib-chapter-body"><div class="lib-chapter-body-inner">${body}</div></div>
+          </li>`;
+      }
     });
     html += `</ul>`;
     wrap.innerHTML = html;
 
-    wrap.querySelectorAll('.lib-chapter-head').forEach(head => {
+    wrap.querySelectorAll('.lib-chapter:not(.lib-chapter-locked) .lib-chapter-head').forEach(head => {
       head.addEventListener('click', () => {
         head.parentElement.classList.toggle('open');
       });
     });
+
+    // Capítulos bloqueados: sacudida sutil al tocarlos
+    wrap.querySelectorAll('.lib-chapter-locked .lib-chapter-head').forEach(head => {
+      head.addEventListener('click', () => {
+        head.classList.remove('shake');
+        void head.offsetWidth;
+        head.classList.add('shake');
+      });
+    });
+
+    // Conejito oculto #3: al final del manual
+    if (!isFuture) {
+      const spot = document.createElement('div');
+      spot.className = 'lib-rabbit-spot';
+      placeRabbit(spot, 'manual', '');
+      wrap.appendChild(spot);
+    }
 
     return wrap;
   }
@@ -826,6 +923,13 @@ const LibraryEngine = (() => {
         playDisc(disc, wrap);
       });
     });
+
+    // Conejito oculto #4: junto al tocadiscos
+    const turntable = wrap.querySelector('.lib-turntable');
+    if (turntable) {
+      placeRabbit(turntable, 'disco',
+        'position:absolute;bottom:4px;left:-14px;transform:scale(0.85);');
+    }
 
     return wrap;
   }
@@ -920,6 +1024,9 @@ const LibraryEngine = (() => {
     const prevBtn = wrap.querySelector('#lib-r-prev');
     const nextBtn = wrap.querySelector('#lib-r-next');
 
+    // Conejito oculto #5: en la página 64 (o en la última si hay menos)
+    const rabbitPage = totalPages >= 64 ? 63 : totalPages - 1;
+
     function render() {
       const isClosing = closing && page === reasons.length;
       // reiniciar animación
@@ -937,6 +1044,15 @@ const LibraryEngine = (() => {
       countEl.textContent = `${page + 1} / ${totalPages}`;
       prevBtn.disabled = page === 0;
       nextBtn.disabled = page === totalPages - 1;
+
+      // colocar (o quitar) el conejito según la página
+      const pageEl = wrap.querySelector('.lib-reasons-page');
+      const oldRabbit = pageEl.querySelector('.lib-rabbit');
+      if (oldRabbit) oldRabbit.remove();
+      if (page === rabbitPage) {
+        placeRabbit(pageEl, 'razones',
+          'position:absolute;bottom:8px;right:14px;transform:scale(0.9);');
+      }
     }
 
     prevBtn.addEventListener('click', () => { if (page > 0) { page--; render(); } });
@@ -946,76 +1062,88 @@ const LibraryEngine = (() => {
     return wrap;
   }
 
-  /* ── Libro 7: Futuro (con advertencia) ─────────────────────── */
-  function openFuture(book) {
-    ensureReader();
-    reader.innerHTML = '';
+  /* ── Libro 8: Bloqueado (requisitos + cuenta regresiva) ────── */
 
-    const panel = document.createElement('div');
-    panel.className = 'lib-reader-panel lib-locked-panel';
-    panel.innerHTML = `
-      <div class="lib-locked-icon">⏳</div>
-      <div class="lib-locked-title">LIBRO PARA EL FUTURO</div>
-      <p class="lib-locked-note" style="border:none;padding-top:0;">${esc(book.warning || '')}</p>
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;">
-        <button class="lib-reasons-nav" id="lib-future-no"
-          style="font-family:'VT323',monospace;background:rgba(255,255,255,0.1);color:#f3e6cf;border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:8px 20px;cursor:pointer;">
-          Mejor esperar
-        </button>
-        <button id="lib-future-yes"
-          style="font-family:'VT323',monospace;background:#f0d98c;color:#1a120c;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">
-          Asomarme
-        </button>
-      </div>
-    `;
-    reader.appendChild(panel);
-    reader.classList.remove('lib-hidden');
-    requestAnimationFrame(() => reader.classList.add('visible'));
-
-    panel.querySelector('#lib-future-no').addEventListener('click', closeReader);
-    panel.querySelector('#lib-future-yes').addEventListener('click', () => {
-      openReader(book, renderChapters(book, true));
-    });
+  /** Estado de un requisito según su tipo. */
+  function reqMet(req, book) {
+    switch (req.type) {
+      case 'rabbits': return allRabbitsFound();
+      case 'date':    return book.unlockDate ? (new Date() >= book.unlockDate) : false;
+      case 'manual':  return !!Progress.get('check_' + req.id, false);
+      case 'always':  return true;
+      default:        return false;
+    }
   }
 
-  /* ── Libro 8: Bloqueado (con cuenta regresiva) ─────────────── */
   function openLocked(book) {
-    const now = new Date();
-    const unlocked = book.unlockDate && now >= book.unlockDate;
-
     ensureReader();
     reader.innerHTML = '';
+
+    const reqs = book.requirements || [];
+    const allMet = reqs.every(r => reqMet(r, book));
 
     const panel = document.createElement('div');
     panel.className = 'lib-reader-panel lib-locked-panel';
 
-    if (unlocked) {
-      const close = document.createElement('button');
-      close.className = 'lib-close';
-      close.innerHTML = '✕';
-      close.addEventListener('click', closeReader);
-      panel.appendChild(close);
+    const close = document.createElement('button');
+    close.className = 'lib-close';
+    close.innerHTML = '✕';
+    close.addEventListener('click', closeReader);
+    panel.appendChild(close);
+
+    if (allMet) {
       panel.insertAdjacentHTML('beforeend', `
         <div class="lib-locked-icon">🔓</div>
         <div class="lib-locked-title">DESBLOQUEADO</div>
         <p class="lib-locked-note" style="white-space:pre-wrap;">${esc(book.unlockedContent || '')}</p>
       `);
-    } else {
-      const reqs = (book.requirements || []).map(r => `<li>${esc(r)}</li>`).join('');
-      panel.innerHTML = `
-        <div class="lib-locked-icon">🔒</div>
-        <div class="lib-locked-title">REQUISITOS DE DESBLOQUEO</div>
-        <ul class="lib-req-list">${reqs}</ul>
-        <p class="lib-locked-note">${esc(book.note || '')}</p>
-        <div class="lib-countdown" id="lib-countdown"></div>
-      `;
+      reader.appendChild(panel);
+      reader.classList.remove('lib-hidden');
+      requestAnimationFrame(() => reader.classList.add('visible'));
+      return;
     }
+
+    const items = reqs.map((r, i) => {
+      const met = reqMet(r, book);
+      const cls = ['lib-req', met ? 'met' : '', r.type === 'manual' ? 'clickable' : '',
+                   r.type === 'always' ? 'always' : ''].join(' ');
+      return `
+        <li class="${cls}" data-req="${i}">
+          <span class="lib-req-box">${met ? '✓' : ''}</span>
+          <span class="lib-req-label">${esc(r.label)}</span>
+        </li>`;
+    }).join('');
+
+    panel.insertAdjacentHTML('beforeend', `
+      <div class="lib-locked-icon">🔒</div>
+      <div class="lib-locked-title">REQUISITOS DE DESBLOQUEO</div>
+      <ul class="lib-req-list2">${items}</ul>
+      <p class="lib-locked-hint">(las casillas se pueden marcar cuando lo hayamos cumplido)</p>
+      <p class="lib-locked-note">${esc(book.note || '')}</p>
+      <div class="lib-countdown" id="lib-countdown"></div>
+    `);
+
+    // Las casillas manuales se pueden marcar/desmarcar
+    panel.querySelectorAll('.lib-req.clickable').forEach(li => {
+      li.addEventListener('click', () => {
+        const req = reqs[parseInt(li.getAttribute('data-req'), 10)];
+        const nuevo = !Progress.get('check_' + req.id, false);
+        Progress.set('check_' + req.id, nuevo);
+        li.classList.toggle('met', nuevo);
+        li.querySelector('.lib-req-box').textContent = nuevo ? '✓' : '';
+        if (nuevo) showToast('✓ ' + req.label);
+        // ¿se cumplió todo? reabrir para mostrar el contenido
+        if ((book.requirements || []).every(r => reqMet(r, book))) {
+          setTimeout(() => openLocked(book), 800);
+        }
+      });
+    });
 
     reader.appendChild(panel);
     reader.classList.remove('lib-hidden');
     requestAnimationFrame(() => reader.classList.add('visible'));
 
-    if (!unlocked && book.unlockDate) startCountdown(book.unlockDate);
+    if (book.unlockDate) startCountdown(book.unlockDate);
   }
 
   let countdownTimer = null;
@@ -1035,6 +1163,146 @@ const LibraryEngine = (() => {
     };
     tick();
     countdownTimer = setInterval(tick, 1000);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     LOS CONEJITOS OCULTOS 🐇
+     5 conejitos negros escondidos por la biblioteca. Al encontrar
+     todos, aparece la escena especial con el sprite del conejo.
+  ══════════════════════════════════════════════════════════════ */
+
+  function rabbitSVG() {
+    // Conejito negro sentado (misma silueta que el del sprite)
+    return `
+      <svg viewBox="0 0 40 46" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="14" cy="12" rx="4" ry="11" fill="#17171c" stroke="#3a3a42" stroke-width="1"/>
+        <ellipse cx="24" cy="11" rx="4" ry="11" fill="#17171c" stroke="#3a3a42" stroke-width="1"/>
+        <ellipse cx="14" cy="12" rx="1.6" ry="7" fill="#2e2e36"/>
+        <ellipse cx="24" cy="11" rx="1.6" ry="7" fill="#2e2e36"/>
+        <ellipse cx="20" cy="36" rx="13" ry="10" fill="#17171c" stroke="#3a3a42" stroke-width="1"/>
+        <circle cx="18" cy="24" r="9" fill="#17171c" stroke="#3a3a42" stroke-width="1"/>
+        <circle cx="21.5" cy="22.5" r="1.8" fill="#f5f5f5"/>
+        <circle cx="30" cy="38" r="3" fill="#f5f5f5"/>
+      </svg>`;
+  }
+
+  /**
+   * Coloca un conejito oculto en un contenedor si aún no fue hallado.
+   * @param {HTMLElement} container
+   * @param {string} id - identificador (estante, album, manual, disco, razones)
+   * @param {string} style - estilos inline de posicionamiento
+   */
+  function placeRabbit(container, id, style) {
+    if (rabbitsFound().includes(id)) return;
+
+    const r = document.createElement('div');
+    r.className = 'lib-rabbit';
+    r.setAttribute('data-rabbit', id);
+    r.setAttribute('aria-label', '...');
+    if (style) r.style.cssText += style;
+    r.innerHTML = rabbitSVG();
+
+    r.addEventListener('click', (e) => {
+      e.stopPropagation();
+      foundRabbit(id, r);
+    });
+
+    container.appendChild(r);
+  }
+
+  function foundRabbit(id, el) {
+    const found = rabbitsFound();
+    if (found.includes(id)) return;
+    found.push(id);
+    Progress.set('rabbits', found);
+
+    // animación de salto y desaparición
+    el.classList.add('caught');
+    setTimeout(() => el.remove(), 700);
+
+    const total = (LIBRARY_CONFIG.rabbitHunt.ids || []).length;
+    showToast(`🐇 Conejito encontrado (${found.length}/${total})`);
+
+    if (found.length >= total) {
+      setTimeout(() => playBunnyScene(), 1600);
+    }
+  }
+
+  let toastEl = null, toastTimer = null;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'lib-toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 2600);
+  }
+
+  /* ── La escena secreta del conejo ──────────────────────────── */
+  function playBunnyScene() {
+    const cfg = LIBRARY_CONFIG.rabbitHunt;
+    if (!cfg || Progress.get('bunny_scene_seen', false) === 'playing') return;
+
+    // cerrar cualquier lector abierto
+    closeReader();
+    if (photoZoom) photoZoom.classList.remove('visible');
+
+    const ov = document.createElement('div');
+    ov.className = 'lib-bunny-scene';
+    ov.innerHTML = `
+      <div class="lib-bunny-stars"></div>
+      <img class="lib-bunny-sprite" src="${cfg.sprite}" alt="el moreno" draggable="false">
+      <div class="lib-bunny-dialog">
+        <p id="lib-bunny-text"></p>
+        <span class="lib-greeter-next" id="lib-bunny-next" style="visibility:hidden;">▼</span>
+      </div>
+      <div class="lib-bunny-hint">toca para continuar</div>
+    `;
+    document.body.appendChild(ov);
+    // setTimeout en vez de rAF: rAF no dispara en pestañas en segundo plano
+    setTimeout(() => ov.classList.add('visible'), 40);
+
+    const textEl = ov.querySelector('#lib-bunny-text');
+    const nextEl = ov.querySelector('#lib-bunny-next');
+    let line = 0, typing = null;
+
+    function typeLine() {
+      const full = cfg.lines[line];
+      let i = 0;
+      textEl.textContent = '';
+      nextEl.style.visibility = 'hidden';
+      typing = setInterval(() => {
+        if (i >= full.length) {
+          clearInterval(typing); typing = null;
+          nextEl.style.visibility = 'visible';
+          return;
+        }
+        textEl.textContent += full[i++];
+      }, 34);
+    }
+
+    ov.addEventListener('click', () => {
+      if (typing) {
+        clearInterval(typing); typing = null;
+        textEl.textContent = cfg.lines[line];
+        nextEl.style.visibility = 'visible';
+        return;
+      }
+      line++;
+      if (line >= cfg.lines.length) {
+        // la escena se despide y se va
+        Progress.set('bunny_scene_seen', true);
+        ov.classList.remove('visible');
+        setTimeout(() => ov.remove(), 1600);
+        return;
+      }
+      typeLine();
+    });
+
+    setTimeout(typeLine, 900);
   }
 
   /* ── Utilidad: escapar HTML ────────────────────────────────── */

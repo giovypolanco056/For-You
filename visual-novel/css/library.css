@@ -110,6 +110,7 @@
 
 /* Tabla de madera bajo cada fila de libros */
 .library-board {
+  position: relative;          /* ancla para el conejito del estante */
   height: 26px;
   margin: 0 6px 46px;
   border-radius: 3px;
@@ -650,6 +651,7 @@
   width: min(94vw, 560px);
 }
 .lib-reasons-page {
+  position: relative;          /* ancla para el conejito de la página 64 */
   background: linear-gradient(160deg, #fdf6e8, #faebd7);
   margin: 14px;
   border-radius: 4px;
@@ -750,9 +752,256 @@
   margin-top: 16px;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   ANIMACIONES COMPARTIDAS (escena del conejo)
+══════════════════════════════════════════════════════════════ */
+@keyframes libGreeterIn {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.lib-greeter-next {
+  display: block;
+  text-align: right;
+  color: #f06292;
+  font-size: 0.8rem;
+  animation: libNextBlink 0.9s ease-in-out infinite;
+}
+
+@keyframes libNextBlink {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50%      { opacity: 0.4; transform: translateY(2px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOS CONEJITOS OCULTOS 🐇
+══════════════════════════════════════════════════════════════ */
+.lib-rabbit {
+  width: 34px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+  animation: libRabbitIdle 3.2s ease-in-out infinite;
+}
+.lib-rabbit svg { width: 100%; height: 100%; display: block; }
+
+.lib-rabbit:hover { transform: scale(1.12); opacity: 1; }
+
+@keyframes libRabbitIdle {
+  0%, 88%, 100% { transform: translateY(0); }
+  92%           { transform: translateY(-3px); }
+  96%           { transform: translateY(0); }
+}
+
+/* Atrapado: saltito y desvanecer */
+.lib-rabbit.caught {
+  animation: libRabbitCaught 0.7s ease forwards;
+  pointer-events: none;
+}
+@keyframes libRabbitCaught {
+  0%   { transform: translateY(0) scale(1);     opacity: 1; }
+  40%  { transform: translateY(-26px) scale(1.15); opacity: 1; }
+  100% { transform: translateY(-40px) scale(0.6);  opacity: 0; }
+}
+
+/* Espacio centrado para conejitos al final de un libro */
+.lib-rabbit-spot {
+  display: flex;
+  justify-content: center;
+  padding: 18px 0 4px;
+  min-height: 20px;
+}
+
+/* Toast del contador */
+.lib-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 700;
+  background: rgba(15, 5, 30, 0.94);
+  border: 1.5px solid #f0d98c;
+  color: #f3e6cf;
+  font-family: 'VT323', monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  padding: 10px 22px;
+  border-radius: 24px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.lib-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── La escena secreta del conejo ──────────────────────────── */
+.lib-bunny-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 650;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(60, 40, 80, 0.5) 0%, transparent 60%),
+    linear-gradient(180deg, #060410 0%, #0d0a1e 60%, #120a18 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  cursor: pointer;
+}
+.lib-bunny-scene.visible { opacity: 1; }
+
+.lib-bunny-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 65% 25%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 78% 45%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.6), transparent);
+  animation: libDust 8s ease-in-out infinite alternate;
+}
+
+.lib-bunny-sprite {
+  width: clamp(200px, 42vw, 330px);
+  height: auto;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.6));
+  animation: libGreeterIn 1.6s ease both 0.4s;
+}
+
+.lib-bunny-dialog {
+  width: min(92vw, 560px);
+  margin-bottom: 26px;
+  background: rgba(15, 5, 30, 0.92);
+  border: 2px solid #ce93d8;
+  border-radius: 14px;
+  padding: 18px 22px 14px;
+  box-shadow: 0 0 30px rgba(206, 147, 216, 0.25);
+}
+
+.lib-bunny-dialog p {
+  margin: 0;
+  font-family: 'VT323', monospace;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  line-height: 1.55;
+  color: #fff8f0;
+  min-height: 3em;
+}
+
+.lib-bunny-hint {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAPÍTULOS BLOQUEADOS (libro del futuro)
+══════════════════════════════════════════════════════════════ */
+.lib-chapter-locked .lib-chapter-head {
+  cursor: default;
+  opacity: 0.55;
+}
+.lib-chapter-locked .lib-chapter-head:hover { color: #5a2a1a; }
+
+.lib-chapter-date {
+  margin-left: auto;
+  font-family: 'VT323', monospace;
+  font-size: 0.85rem;
+  color: #b5651d;
+  white-space: nowrap;
+  padding-left: 10px;
+}
+
+.lib-chapter-head.shake {
+  animation: libShake 0.4s ease;
+}
+@keyframes libShake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   REQUISITOS DEL LIBRO BLOQUEADO (casillas)
+══════════════════════════════════════════════════════════════ */
+.lib-req-list2 {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 14px;
+  max-width: 320px;
+  text-align: left;
+}
+
+.lib-req {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-family: 'VT323', monospace;
+  font-size: 1.08rem;
+  color: rgba(243,230,207,0.85);
+  transition: background 0.2s ease;
+}
+
+.lib-req-box {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(240,217,140,0.6);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #7CFC7C;
+  background: rgba(0,0,0,0.3);
+  transition: all 0.25s ease;
+}
+
+.lib-req.met .lib-req-box {
+  border-color: #7CFC7C;
+  box-shadow: 0 0 10px rgba(124,252,124,0.3);
+}
+.lib-req.met .lib-req-label { color: #f3e6cf; }
+
+.lib-req.clickable { cursor: pointer; }
+.lib-req.clickable:hover { background: rgba(240,217,140,0.08); }
+
+.lib-req.always .lib-req-box {
+  border-color: #f06292;
+  color: #f06292;
+  box-shadow: 0 0 10px rgba(240,98,146,0.35);
+}
+.lib-req.always .lib-req-label { color: #f8c8d8; }
+
+.lib-locked-hint {
+  font-family: 'VT323', monospace;
+  font-size: 0.85rem;
+  color: rgba(243,230,207,0.4);
+  margin: 0 0 16px;
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 560px) {
   .library-shelf { gap: 14px 16px; padding: 14px 10px 0; }
   .lib-paper { padding: 40px 22px 32px; }
   .lib-chapter-body-inner { padding-left: 30px; }
+
+  .lib-chapter-date { font-size: 0.72rem; }
+  .lib-bunny-sprite { width: 62vw; }
 }
