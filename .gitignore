@@ -1,0 +1,7 @@
+# Herramientas locales de Claude Code / editor
+.claude/
+
+# Sistema
+Thumbs.db
+.DS_Store
+desktop.ini

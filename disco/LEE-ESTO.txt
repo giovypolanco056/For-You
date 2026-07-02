@@ -1,0 +1,20 @@
+💿 CARPETA: disco
+================================
+
+Aquí van las canciones y las portadas del "Tocadiscos" (Libro 4).
+
+CÓMO AGREGAR CANCIONES:
+1. Copia dentro de esta carpeta:
+   - El audio de la canción (mp3, m4a, ogg...).
+   - La portada de la canción (jpg, png...).
+2. Abre el archivo:  visual-novel/js/library.js
+3. Busca la sección "TOCADISCOS (Libro 4)" y llena cada disco así:
+
+   { title: "Nombre de la canción",
+     artist: "Artista",
+     cover: "../disco/portada.jpg",
+     audio: "../disco/cancion.mp3",
+     story: "Por qué elegiste esta canción." }
+
+Los discos ya están creados con sus nombres. Solo agrega cover, audio e historia.
+Si una canción no tiene audio todavía, igual se mostrará su historia.

@@ -1,0 +1,758 @@
+/* ================================================================
+   LIBRARY.CSS
+   La biblioteca final: un estante con libros seleccionables.
+   Aparece sobre la pantalla en negro al terminar la novela visual.
+================================================================ */
+
+/* ── Escena principal de la biblioteca ─────────────────────── */
+.library-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 300;               /* encima de todo (fade era 70, letter 200) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  padding: 40px 16px 60px;
+
+  /* Ambiente de habitación / estudio cálido y oscuro */
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(90, 50, 30, 0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 120%, rgba(40, 20, 45, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, #1a1016 0%, #120a12 50%, #0a0710 100%);
+
+  opacity: 0;
+  transition: opacity 2.5s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194, 24, 91, 0.3) transparent;
+}
+
+.library-scene.visible {
+  opacity: 1;
+}
+
+.library-scene::-webkit-scrollbar { width: 6px; }
+.library-scene::-webkit-scrollbar-thumb {
+  background: rgba(194, 24, 91, 0.3);
+  border-radius: 6px;
+}
+
+/* Polvo / partículas suaves de ambiente */
+.library-dust {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 301;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,220,180,0.7), transparent),
+    radial-gradient(1px 1px at 70% 60%, rgba(255,220,180,0.5), transparent),
+    radial-gradient(1px 1px at 45% 80%, rgba(255,220,180,0.6), transparent),
+    radial-gradient(1px 1px at 85% 20%, rgba(255,220,180,0.4), transparent),
+    radial-gradient(1px 1px at 15% 70%, rgba(255,220,180,0.5), transparent);
+  animation: libDust 12s ease-in-out infinite alternate;
+}
+
+@keyframes libDust {
+  from { transform: translateY(0); opacity: 0.35; }
+  to   { transform: translateY(-14px); opacity: 0.6; }
+}
+
+/* ── Encabezado ────────────────────────────────────────────── */
+.library-header {
+  text-align: center;
+  margin-bottom: 34px;
+  animation: libFadeDown 1.4s ease both;
+  animation-delay: 0.6s;
+}
+
+.library-title {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  color: #f3e6cf;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-shadow: 0 2px 20px rgba(255, 190, 120, 0.35);
+}
+
+.library-subtitle {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 2.6vw, 1.05rem);
+  color: rgba(243, 230, 207, 0.6);
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+}
+
+@keyframes libFadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Estante con libros ────────────────────────────────────── */
+.library-shelf-wrap {
+  width: min(100%, 960px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.library-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 18px 22px;
+  padding: 18px 26px 0;
+  min-height: 220px;
+}
+
+/* Tabla de madera bajo cada fila de libros */
+.library-board {
+  height: 26px;
+  margin: 0 6px 46px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, #5a3a24 0%, #3d2617 60%, #2a190f 100%);
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.55),
+    inset 0 2px 3px rgba(255,190,120,0.25),
+    inset 0 -3px 4px rgba(0,0,0,0.5);
+}
+
+/* ── Libro individual ──────────────────────────────────────── */
+.lib-book {
+  position: relative;
+  width: var(--book-w, 120px);
+  height: var(--book-h, 180px);
+  cursor: pointer;
+  border-radius: 3px 6px 6px 3px;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 6%, transparent 12%),
+    linear-gradient(160deg, var(--book-c1, #2c3e66) 0%, var(--book-c2, #1c2947) 100%);
+  box-shadow:
+    0 14px 24px rgba(0,0,0,0.55),
+    inset -6px 0 12px rgba(0,0,0,0.35),
+    inset 2px 0 2px rgba(255,255,255,0.08);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.35s ease;
+  transform-origin: bottom center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 12px 12px 16px;
+  overflow: hidden;
+  animation: libBookIn 0.7s ease both;
+}
+
+@keyframes libBookIn {
+  from { opacity: 0; transform: translateY(30px) rotate(-2deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+.lib-book:hover,
+.lib-book:focus-visible {
+  transform: translateY(-16px) scale(1.04);
+  box-shadow:
+    0 26px 40px rgba(0,0,0,0.6),
+    0 0 30px rgba(255, 200, 130, 0.25),
+    inset -6px 0 12px rgba(0,0,0,0.35);
+  outline: none;
+}
+
+/* Lomo / borde izquierdo dorado sutil */
+.lib-book::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 8px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+.lib-book-emoji {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  align-self: flex-end;
+}
+
+.lib-book-title {
+  font-family: 'Noto Serif', serif;
+  font-size: clamp(0.7rem, 1.9vw, 0.86rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--book-ink, #f0d98c);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  letter-spacing: 0.01em;
+}
+
+.lib-book-hint {
+  font-family: 'VT323', monospace;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.05em;
+}
+
+/* Candado para el libro bloqueado */
+.lib-book-lock {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.2rem;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+}
+
+/* Polaroid en la portada del álbum */
+.lib-book-polaroid {
+  align-self: center;
+  width: 62%;
+  background: #f8f4ec;
+  padding: 5px 5px 14px;
+  border-radius: 2px;
+  transform: rotate(-4deg);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.lib-book-polaroid > div {
+  width: 100%;
+  padding-top: 82%;
+  background: linear-gradient(135deg, #b5a48f, #6d5a44);
+  border-radius: 1px;
+}
+
+/* Notas adhesivas saliendo del manual */
+.lib-book-sticky {
+  position: absolute;
+  right: -5px;
+  width: 16px;
+  height: 22px;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Overlay lector (contenido del libro) ──────────────────── */
+.lib-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(6, 3, 12, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: background 0.6s ease, opacity 0.5s ease;
+}
+
+.lib-reader.visible {
+  opacity: 1;
+  pointer-events: all;
+  background: rgba(6, 3, 12, 0.9);
+}
+
+.lib-reader-panel {
+  position: relative;
+  width: min(94vw, 720px);
+  max-height: 88dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  transform: translateY(30px) scale(0.94);
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lib-reader.visible .lib-reader-panel {
+  transform: translateY(0) scale(1);
+}
+
+/* Botón cerrar */
+.lib-close {
+  position: absolute;
+  top: 10px; right: 12px;
+  z-index: 5;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.lib-close:hover { background: rgba(194,24,91,0.8); transform: rotate(90deg); }
+
+/* Cuerpo de lectura genérico (papel) */
+.lib-paper {
+  background:
+    repeating-linear-gradient(transparent, transparent 27px,
+      rgba(120, 80, 40, 0.06) 27px, rgba(120, 80, 40, 0.06) 28px),
+    linear-gradient(160deg, #fdf6e8 0%, #faebd7 60%, #fdf0e0 100%);
+  color: #3d1c0e;
+  padding: 46px 40px 40px;
+  overflow-y: auto;
+  font-family: 'Noto Serif', serif;
+  line-height: 1.9;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194,24,91,0.3) transparent;
+}
+.lib-paper::-webkit-scrollbar { width: 5px; }
+.lib-paper::-webkit-scrollbar-thumb { background: rgba(194,24,91,0.3); border-radius: 5px; }
+
+.lib-reader-title {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #7b2d42;
+  margin: 0 0 6px;
+}
+.lib-reader-sub {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(80,40,20,0.6);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(194,24,91,0.2);
+}
+
+/* ── Libro 1: PDF ──────────────────────────────────────────── */
+.lib-pdf-frame {
+  width: 100%;
+  height: 80dvh;
+  border: none;
+  background: #333;
+}
+.lib-pdf-panel { background: #241a12; }
+.lib-pdf-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 54px 10px 16px;
+  background: #1a120c;
+  color: #f0d98c;
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+.lib-pdf-open {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  color: #1a120c;
+  background: #f0d98c;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.lib-pdf-open:hover { background: #ffe9a8; }
+
+/* ── Libro 2: Álbum ────────────────────────────────────────── */
+.lib-album-panel { background: #2a1c12; }
+.lib-album-scroll {
+  overflow-y: auto;
+  padding: 46px 26px 40px;
+  max-height: 88dvh;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194,24,91,0.3) transparent;
+}
+.lib-album-section-title {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  color: #f0d98c;
+  font-size: 1.15rem;
+  margin: 26px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(240,217,140,0.25);
+}
+.lib-album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+.lib-polaroid {
+  background: #f8f4ec;
+  padding: 8px 8px 30px;
+  border-radius: 2px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transform: rotate(var(--rot, -2deg));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+.lib-polaroid:hover {
+  transform: rotate(0) scale(1.05);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.6);
+  z-index: 2;
+}
+.lib-polaroid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: #ccc;
+}
+.lib-polaroid-empty {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #cbb89e, #a08a6c);
+  color: rgba(255,255,255,0.85);
+  font-family: 'VT323', monospace;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 8px;
+}
+.lib-polaroid-caption {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 0.72rem;
+  color: #5a3a24;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Foto ampliada */
+.lib-photo-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.lib-photo-zoom.visible { opacity: 1; pointer-events: all; }
+.lib-photo-zoom img {
+  max-width: 90vw;
+  max-height: 60dvh;
+  border: 8px solid #f8f4ec;
+  border-radius: 2px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+}
+.lib-photo-zoom .lib-zoom-empty {
+  width: min(80vw, 360px);
+  height: min(50dvh, 360px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #cbb89e, #a08a6c);
+  border: 8px solid #f8f4ec;
+  color: #fff;
+  font-family: 'VT323', monospace;
+}
+.lib-photo-date {
+  font-family: 'VT323', monospace;
+  color: #f0d98c;
+  margin-top: 18px;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+}
+.lib-photo-story {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  color: #f3e6cf;
+  max-width: 560px;
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.7;
+}
+
+/* ── Libro 3: Manual & Libro 7: Futuro (capítulos) ─────────── */
+.lib-chapter-list { list-style: none; margin: 0; padding: 0; }
+.lib-chapter {
+  border-bottom: 1px dashed rgba(194,24,91,0.25);
+}
+.lib-chapter-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 4px;
+  cursor: pointer;
+  font-family: 'Noto Serif', serif;
+  font-size: 1rem;
+  color: #5a2a1a;
+  transition: color 0.2s ease;
+}
+.lib-chapter-head:hover { color: #c2185b; }
+.lib-chapter-head .lib-chapter-num {
+  font-family: 'VT323', monospace;
+  color: #c2185b;
+  font-size: 1.1rem;
+  min-width: 26px;
+}
+.lib-chapter-head .lib-chapter-arrow {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+  color: rgba(194,24,91,0.6);
+}
+.lib-chapter.open .lib-chapter-arrow { transform: rotate(90deg); }
+.lib-chapter-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  font-size: 0.95rem;
+  color: #3d1c0e;
+  white-space: pre-wrap;
+}
+.lib-chapter.open .lib-chapter-body { max-height: 800px; }
+.lib-chapter-body-inner { padding: 4px 4px 18px 40px; font-style: italic; }
+
+/* Notas adhesivas decorativas del manual */
+.lib-manual-panel .lib-paper { padding-top: 40px; }
+
+/* ── Libro 4: Tocadiscos ───────────────────────────────────── */
+.lib-record-panel {
+  background: linear-gradient(160deg, #3a2417 0%, #241610 100%);
+  padding: 46px 30px 34px;
+  overflow-y: auto;
+  max-height: 88dvh;
+  scrollbar-width: thin;
+}
+.lib-turntable {
+  width: min(80%, 300px);
+  margin: 0 auto 24px;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #2a1c12, #16100a);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.6), inset 0 0 40px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.lib-vinyl {
+  width: 82%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #b98a3e 0 16%, transparent 16.5%),
+    repeating-radial-gradient(circle at center, #111 0 2px, #1c1c1c 2px 4px),
+    #0a0a0a;
+  box-shadow: 0 0 0 6px #050505, 0 8px 20px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+}
+.lib-vinyl.spinning { animation: libSpin 4s linear infinite; }
+@keyframes libSpin { to { transform: rotate(360deg); } }
+.lib-vinyl-label {
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #c2185b;
+  border: 2px solid rgba(0,0,0,0.4);
+}
+.lib-now-playing {
+  text-align: center;
+  color: #f0d98c;
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  min-height: 24px;
+  margin-bottom: 6px;
+}
+.lib-record-story {
+  text-align: center;
+  color: rgba(243,230,207,0.85);
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  line-height: 1.7;
+  max-width: 460px;
+  margin: 0 auto 22px;
+  min-height: 20px;
+}
+.lib-disc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lib-disc {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(240,217,140,0.15);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.lib-disc:hover { background: rgba(240,217,140,0.1); border-color: rgba(240,217,140,0.4); }
+.lib-disc.active { background: rgba(194,24,91,0.18); border-color: #c2185b; }
+.lib-disc-cover {
+  width: 48px; height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #c2185b, #6d1030);
+  flex-shrink: 0;
+}
+.lib-disc-info { display: flex; flex-direction: column; }
+.lib-disc-title {
+  font-family: 'Noto Serif', serif;
+  color: #f3e6cf;
+  font-size: 0.98rem;
+}
+.lib-disc-artist {
+  font-family: 'VT323', monospace;
+  color: rgba(243,230,207,0.55);
+  font-size: 0.85rem;
+}
+
+/* ── Libro 5: Error (cómo dejar de amarte) ─────────────────── */
+.lib-error-panel {
+  background: #0c0c10;
+  border: 1px solid rgba(120,255,120,0.15);
+  width: min(92vw, 520px);
+  padding: 40px 30px;
+  font-family: 'VT323', monospace;
+  color: #7CFC7C;
+  text-align: center;
+}
+.lib-error-panel .lib-glitch-title {
+  font-size: 1.8rem;
+  letter-spacing: 0.2em;
+  color: #ff5f5f;
+  margin-bottom: 22px;
+  text-shadow: 2px 0 #00e5ff, -2px 0 #ff2e63;
+  animation: libErr 0.25s steps(2) infinite;
+}
+@keyframes libErr {
+  0% { transform: translate(0,0); }
+  50% { transform: translate(-1px, 1px); }
+  100% { transform: translate(1px, -1px); }
+}
+.lib-error-panel p { font-size: 1.15rem; line-height: 1.8; margin: 8px 0; }
+.lib-error-panel .lib-err-reason { color: rgba(124,252,124,0.6); margin-top: 20px; }
+
+/* ── Libro 6: Razones (paginado) ───────────────────────────── */
+.lib-reasons-panel {
+  background:
+    linear-gradient(160deg, #7a1028 0%, #4a0818 100%);
+  padding: 0;
+  width: min(94vw, 560px);
+}
+.lib-reasons-page {
+  background: linear-gradient(160deg, #fdf6e8, #faebd7);
+  margin: 14px;
+  border-radius: 4px;
+  min-height: 300px;
+  padding: 40px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: inset 0 0 60px rgba(122,16,40,0.06);
+}
+.lib-reasons-num {
+  font-family: 'VT323', monospace;
+  color: #c2185b;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+}
+.lib-reasons-text {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  color: #4a0818;
+  line-height: 1.6;
+  animation: libFadeIn 0.5s ease;
+}
+@keyframes libFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.lib-reasons-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 20px 18px;
+}
+.lib-reasons-nav button {
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.12);
+  color: #f3e6cf;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.lib-reasons-nav button:hover:not(:disabled) { background: rgba(255,255,255,0.25); }
+.lib-reasons-nav button:disabled { opacity: 0.3; cursor: default; }
+.lib-reasons-count {
+  font-family: 'VT323', monospace;
+  color: rgba(243,230,207,0.7);
+  font-size: 0.9rem;
+}
+
+/* ── Libro 8: Bloqueado ────────────────────────────────────── */
+.lib-locked-panel {
+  background: linear-gradient(160deg, #14141a 0%, #0a0a0f 100%);
+  border: 1px solid rgba(240,217,140,0.25);
+  width: min(92vw, 480px);
+  padding: 44px 34px 38px;
+  text-align: center;
+  color: #f3e6cf;
+}
+.lib-locked-icon { font-size: 3rem; margin-bottom: 16px; }
+.lib-locked-title {
+  font-family: 'VT323', monospace;
+  font-size: 1.3rem;
+  letter-spacing: 0.2em;
+  color: #f0d98c;
+  margin-bottom: 24px;
+}
+.lib-req-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 26px;
+  max-width: 240px;
+  text-align: left;
+}
+.lib-req-list li {
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+  padding: 6px 0;
+  color: rgba(243,230,207,0.85);
+}
+.lib-req-list li::before { content: '☐ '; color: #f0d98c; }
+.lib-locked-note {
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  color: rgba(243,230,207,0.7);
+  line-height: 1.6;
+  border-top: 1px solid rgba(240,217,140,0.2);
+  padding-top: 20px;
+}
+.lib-countdown {
+  font-family: 'VT323', monospace;
+  font-size: 1.4rem;
+  color: #f0d98c;
+  letter-spacing: 0.08em;
+  margin-top: 16px;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .library-shelf { gap: 14px 16px; padding: 14px 10px 0; }
+  .lib-paper { padding: 40px 22px 32px; }
+  .lib-chapter-body-inner { padding-left: 30px; }
+}

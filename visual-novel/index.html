@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página de Cumpleaños</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=VT323&family=Noto+Serif:ital@0;1&family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/birthday-page.css" />
+  <link rel="stylesheet" href="css/visual-novel.css" />
+  <link rel="stylesheet" href="css/letter.css" />
+  <link rel="stylesheet" href="css/library.css" />
+</head>
+
+<body>
+
+  <div id="birthday-page" class="birthday-page">
+    <div class="birthday-content">
+      <div class="birthday-decoration top-decoration">
+        <span>🎀</span><span>✨</span><span>🌸</span><span>✨</span><span>🎀</span>
+      </div>
+      <h1 class="birthday-title">Feliz Aniversario</h1>
+      <p class="birthday-subtitle">Una página especial para ti</p>
+      <div class="birthday-hearts">
+        <span>💕</span><span>💫</span><span>💕</span>
+      </div>
+      <p class="birthday-message">
+        No me dió el tiempo.<br/>
+        así que solo es esta ventana... Sorry
+      </p>
+      <div class="birthday-decoration bottom-decoration">
+        <span>🌸</span><span>✨</span><span>🎀</span><span>✨</span><span>🌸</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="vn-layer" class="vn-layer vn-hidden">
+
+    <div id="vn-overlay" class="vn-overlay"></div>
+
+    <div id="vn-background" class="vn-background">
+      <div id="vn-bg-gradient" class="vn-bg-gradient"></div>
+      <canvas id="vn-bg-canvas" class="vn-bg-canvas"></canvas>
+    </div>
+
+    <div id="vn-particles" class="vn-particles"></div>
+
+    <div id="vn-glitch-layer" class="vn-glitch-layer vn-hidden"></div>
+
+    <div id="vn-character-container" class="vn-character-container">
+      <img
+        id="vn-character-sprite"
+        class="vn-character-sprite"
+        src=""
+        alt="Personaje"
+        draggable="false"
+      />
+    </div>
+
+    <div id="vn-dialog-box" class="vn-dialog-box vn-hidden">
+      <div id="vn-character-name" class="vn-character-name">
+        <span id="vn-name-text">el moreno</span>
+      </div>
+      <div id="vn-dialog-text-container" class="vn-dialog-text-container">
+        <p id="vn-dialog-text" class="vn-dialog-text"></p>
+      </div>
+      <div id="vn-next-indicator" class="vn-next-indicator vn-hidden">▼</div>
+    </div>
+
+    <div id="vn-tap-zone" class="vn-tap-zone vn-hidden"></div>
+    <div id="vn-tap-hint" class="vn-tap-hint vn-hidden">toca para continuar</div>
+
+    <button id="vn-skip-btn" class="vn-skip-btn vn-hidden">
+      SALTAR ⏭
+    </button>
+
+    <div id="vn-fade-screen" class="vn-fade-screen vn-hidden"></div>
+
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/backgrounds.js"></script>
+  <script src="js/character.js"></script>
+  <script src="js/dialog.js"></script>
+  <script src="js/letter.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/scenes.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

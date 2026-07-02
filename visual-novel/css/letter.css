@@ -1,0 +1,265 @@
+/* ================================================================
+   LETTER.CSS
+   Pantalla de carta romántica estilo pergamino.
+   Aparece encima de todo cuando el personaje entrega la carta.
+================================================================ */
+
+/* ── Overlay de fondo ──────────────────────────────────────── */
+.letter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 2, 20, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: background 1s ease, opacity 0.8s ease;
+}
+
+.letter-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+  background: rgba(10, 2, 20, 0.85);
+}
+
+/* ── Contenedor de la carta ────────────────────────────────── */
+.letter-card {
+  position: relative;
+  width: min(92vw, 560px);
+  max-height: 85dvh;
+  overflow-y: auto;
+
+  /* Estilo pergamino / carta antigua */
+  background:
+    /* Textura de líneas sutiles */
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(194, 24, 91, 0.08) 27px,
+      rgba(194, 24, 91, 0.08) 28px
+    ),
+    /* Fondo crema cálido */
+    linear-gradient(
+      160deg,
+      #fdf6e8 0%,
+      #faebd7 40%,
+      #fdf0e0 70%,
+      #faebd7 100%
+    );
+
+  border-radius: 4px 4px 4px 4px;
+  padding: 48px 44px 44px;
+
+  /* Sombra dramática estilo carta */
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.3),
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 0 80px rgba(194, 24, 91, 0.04);
+
+  /* Borde interior sutil */
+  outline: 1px solid rgba(194, 24, 91, 0.15);
+  outline-offset: -12px;
+
+  /* Animación de entrada */
+  transform: translateY(40px) scale(0.96) rotate(-0.5deg);
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Scrollbar estilizada */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194, 24, 91, 0.3) transparent;
+}
+
+.letter-card::-webkit-scrollbar { width: 4px; }
+.letter-card::-webkit-scrollbar-thumb { background: rgba(194,24,91,0.3); border-radius: 4px; }
+
+.letter-overlay.visible .letter-card {
+  transform: translateY(0) scale(1) rotate(-0.5deg);
+}
+
+/* Efecto de doblado en las esquinas */
+.letter-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  border-width: 0 28px 28px 0;
+  border-style: solid;
+  border-color:
+    rgba(194, 24, 91, 0.12)
+    rgba(240, 228, 210, 1)
+    rgba(194, 24, 91, 0.08)
+    transparent;
+  box-shadow: -2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ── Encabezado de la carta ────────────────────────────────── */
+.letter-header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(194, 24, 91, 0.2);
+  position: relative;
+}
+
+.letter-header::after {
+  content: '❧';
+  display: block;
+  text-align: center;
+  color: rgba(194, 24, 91, 0.4);
+  font-size: 1.2rem;
+  margin-top: 10px;
+  letter-spacing: 0.5em;
+}
+
+.letter-date {
+  font-family: 'Noto Serif', serif;
+  font-size: 0.82rem;
+  color: rgba(80, 40, 20, 0.55);
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.letter-to {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.35rem;
+  color: #7b2d42;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* ── Cuerpo de la carta ────────────────────────────────────── */
+.letter-body {
+  font-family: 'Noto Serif', serif;
+  font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+  color: #3d1c0e;
+  line-height: 1.95;
+  white-space: pre-wrap;
+  word-break: break-word;
+  letter-spacing: 0.01em;
+  min-height: 120px;
+}
+
+/* Letra capital decorativa en el primer párrafo */
+.letter-body .drop-cap {
+  float: left;
+  font-family: 'Noto Serif', serif;
+  font-size: 3.8rem;
+  line-height: 0.75;
+  padding: 6px 8px 0 0;
+  color: #c2185b;
+  font-style: italic;
+}
+
+/* ── Firma ─────────────────────────────────────────────────── */
+.letter-signature {
+  margin-top: 28px;
+  padding-top: 16px;
+  text-align: right;
+  border-top: 1px solid rgba(194, 24, 91, 0.15);
+}
+
+.letter-signature-label {
+  font-family: 'Noto Serif', serif;
+  font-size: 0.82rem;
+  color: rgba(80, 40, 20, 0.5);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.letter-signature-name {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  color: #7b2d42;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  /* Simula escritura a mano */
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+
+/* ── Decoraciones de la carta ──────────────────────────────── */
+.letter-deco {
+  text-align: center;
+  font-size: 1rem;
+  color: rgba(194, 24, 91, 0.35);
+  letter-spacing: 0.6em;
+  margin: 16px 0 0;
+}
+
+/* ── Botón de cerrar / continuar ───────────────────────────── */
+.letter-continue-btn {
+  display: block;
+  margin: 28px auto 0;
+  font-family: 'VT323', monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  color: #c2185b;
+  background: transparent;
+  border: 1.5px solid rgba(194, 24, 91, 0.4);
+  border-radius: 8px;
+  padding: 8px 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.letter-continue-btn:hover,
+.letter-continue-btn:active {
+  background: rgba(194, 24, 91, 0.1);
+  border-color: #c2185b;
+  transform: scale(1.03);
+}
+
+/* ── Animación de entrada del texto (typewriter opcional) ───── */
+.letter-body.typing::after {
+  content: '|';
+  color: #c2185b;
+  animation: letterCursor 0.7s step-end infinite;
+}
+
+@keyframes letterCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Sello de cera decorativo ──────────────────────────────── */
+.letter-seal {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle at 40% 35%, #e91e63, #880e4f);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 3px 12px rgba(136, 14, 79, 0.5);
+  border: 2px solid rgba(255,255,255,0.15);
+}
+
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .letter-card {
+    padding: 36px 22px 36px;
+    outline-offset: -8px;
+  }
+
+  .letter-to {
+    font-size: 1.15rem;
+  }
+
+  .letter-body {
+    font-size: 0.92rem;
+    line-height: 1.85;
+  }
+
+  .letter-signature-name {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,16 @@
+📷 CARPETA: fotos de album
+================================
+
+Aquí van las fotos del libro "Nuestro Álbum".
+
+CÓMO AGREGAR FOTOS:
+1. Copia tus fotos dentro de esta carpeta (jpg, png, etc.).
+2. Abre el archivo:  visual-novel/js/library.js
+3. Busca la sección "ÁLBUM (Libro 2)" y agrega cada foto así:
+
+   { src: "../fotos de album/NOMBRE-DE-TU-FOTO.jpg",
+     date: "12 de febrero, 2025",
+     story: "La historia que quieras contar sobre esta foto." }
+
+Cada foto pertenece a una sección (Cómo nos conocimos, Primeras citas, etc.).
+En el archivo ya están todas las secciones creadas, solo llena las fotos.
