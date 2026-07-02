@@ -31,8 +31,8 @@ const LIBRARY_CONFIG = {
       description: "El intento más grande que he hecho de poner en palabras lo mucho que te amo.",
       // Apariencia: el más grande, tapa dura azul oscuro, letras doradas
       appearance: { c1: "#24365e", c2: "#111d3a", ink: "#f0d98c", w: 150, h: 220 },
-      // Ruta al PDF (está en la carpeta Objetos)
-      pdf: "../Objetos/365 Días Contigo Digital.pdf",
+      // Abre el flipbook en línea (Heyzine)
+      url: "https://heyzine.com/flip-book/7ee1fc545a.html",
     },
 
     /* ── 📷 2. NUESTRO ÁLBUM ─────────────────────────────────── */
@@ -41,49 +41,157 @@ const LIBRARY_CONFIG = {
       type: "album",
       title: "Nuestro Álbum",
       emoji: "📷",
-      description: "Porque la memoria merece tener un lugar al que volver.",
+      description: "El lugar donde están guardados nuestros momentos.",
       // Apariencia: cuero marrón con polaroid en la portada
       appearance: { c1: "#7a4a28", c2: "#4a2c16", ink: "#f3e6cf", w: 130, h: 190, polaroid: true },
 
       // ► AGREGA TUS FOTOS AQUÍ. Copia las imágenes en la carpeta
       //   "fotos de album" y llena cada sección.
       //   Formato de cada foto:
-      //   { src: "../fotos de album/mi-foto.jpg", date: "Fecha", story: "Historia" }
+      //   { src: "../fotos de album/web/mi-foto.jpg", date: "Fecha", story: "Historia" }
       //   Si dejas "src" vacío ("") se mostrará un marco de "próximamente".
       sections: [
         {
           name: "Cómo nos conocimos",
           photos: [
-            { src: "", date: "", story: "" },
+            { src: "../fotos de album/web/Imagen de WhatsApp 2025-10-10 a las 20.55.54_9c8fccb5.jpg", date: "", story: "" },
+            { src: "../fotos de album/web/Imagen de WhatsApp 2025-10-10 a las 22.15.48_8a21cc41.jpg", date: "", story: "" },
+            { src: "../fotos de album/web/Imagen de WhatsApp 2025-10-10 a las 22.22.55_0ba649d6.jpg", date: "", story: "" },
+            { src: "../fotos de album/web/Imagen de WhatsApp 2025-10-10 a las 22.32.59_5bfba28b.jpg", date: "", story: "" },
+            { src: "../fotos de album/web/Imagen de WhatsApp 2025-10-10 a las 22.32.59_7cfb5a03.jpg", date: "", story: "" },
           ],
         },
         {
-          name: "Primeras conversaciones",
-          photos: [ { src: "", date: "", story: "" } ],
+          name: "Selfies",
+          photos: [
+            { src: "../fotos de album/web/WhatsApp Image 2026-04-07 at 23.48.31 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-04-07 at 23.48.31.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-04-07 at 23.52.37.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 20.06.28 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 20.06.29 (4).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.57 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.57.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.02.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.07 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.07 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.08.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.09.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.10 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.13 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.13 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.15 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.07.17.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.33.03.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.37.00.jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Primeras fotos",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/WhatsApp Image 2026-04-07 at 23.48.31 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 20.06.28 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.52.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.54.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.57 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.07.18 (1).jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Primeras citas",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.06.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.07.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.10.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.12 (3).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.21.11 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.25.03.jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Nuestro primer año",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/IMG_2100.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2149.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2169.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2170.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2171.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2177.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2178.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2199.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2201.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2202.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2203.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2205.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2206.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2207.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2209.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2210.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2215.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2217.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2218.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2219.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.34.34.jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Fotos favoritas",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/IMG_2173.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2174.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2175.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2179.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2181.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2182.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2183.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2185.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2186.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2187.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2189.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2190.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2191.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2213.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-13 at 19.01.57.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 20.06.29 (2).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 20.06.29 (3).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.53.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.57 (3).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.10 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.10 (3).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-06-08 at 20.04.17.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-06-08 at 20.22.55.jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Fotos que no recuerdas que te tomé",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/IMG_2126.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2127.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2129.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2130.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2133.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2134.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2138.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2197.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2198.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2211.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.09 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-31 at 11.07.59 (1).jpeg", date: "", story: "" },
+          ],
         },
         {
           name: "Fotos vergonzosas",
-          photos: [ { src: "", date: "", story: "" } ],
+          photos: [
+            { src: "../fotos de album/web/IMG_2131.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2141.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2146.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/IMG_2214.JPG", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.00.54 (1).jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.14.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.01.15.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-24 at 21.11.06.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.31.42.jpeg", date: "", story: "" },
+            { src: "../fotos de album/web/WhatsApp Image 2026-05-28 at 22.40.21.jpeg", date: "", story: "" },
+          ],
         },
       ],
     },
@@ -382,11 +490,12 @@ const LibraryEngine = (() => {
     setTimeout(() => { if (reader) reader.innerHTML = ''; }, 500);
   }
 
-  /* ── Libro 1: PDF ──────────────────────────────────────────── */
+  /* ── Libro 1: PDF / Flipbook en línea ──────────────────────── */
   function renderPDF(book) {
     const wrap = document.createElement('div');
     wrap.className = 'lib-pdf-panel';
-    const url = encodeURI(book.pdf);
+    // Admite un flipbook en línea (book.url) o un PDF local (book.pdf)
+    const url = book.url ? book.url : encodeURI(book.pdf);
     wrap.innerHTML = `
       <div class="lib-pdf-bar">
         <span>${esc(book.title)}</span>
@@ -418,6 +527,7 @@ const LibraryEngine = (() => {
           html += `
             <div class="lib-polaroid" style="--rot:${rot}deg" data-photo="${idx}">
               <img src="${encodeURI(photo.src)}" alt="${esc(section.name)}"
+                   loading="lazy" decoding="async"
                    onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'lib-polaroid-empty',textContent:'Foto no encontrada'}))">
               <div class="lib-polaroid-caption">${caption}</div>
             </div>`;

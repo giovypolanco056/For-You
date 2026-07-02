@@ -3,14 +3,22 @@
 
 Aquí van las fotos del libro "Nuestro Álbum".
 
-CÓMO AGREGAR FOTOS:
-1. Copia tus fotos dentro de esta carpeta (jpg, png, etc.).
-2. Abre el archivo:  visual-novel/js/library.js
-3. Busca la sección "ÁLBUM (Libro 2)" y agrega cada foto así:
+IMPORTANTE — versión optimizada para web:
+Las fotos que se muestran en el link salen de la subcarpeta "web".
+Ahí están las mismas fotos pero comprimidas (más livianas) para que
+el álbum cargue rápido en el celular. Los originales (pesados) y los
+archivos RAW (.CR3) se quedan solo en tu PC y NO se suben al link.
 
-   { src: "../fotos de album/NOMBRE-DE-TU-FOTO.jpg",
+CÓMO AGREGAR FOTOS NUEVAS:
+1. Copia tus fotos en esta carpeta (jpg, png, etc.).
+2. Pídele a Claude que las optimice y las coloque en el álbum,
+   o crea tú una versión más liviana dentro de la carpeta "web"
+   con el mismo nombre de archivo.
+3. En visual-novel/js/library.js (sección "ÁLBUM"), agrega la foto:
+
+   { src: "../fotos de album/web/NOMBRE.jpg",
      date: "12 de febrero, 2025",
-     story: "La historia que quieras contar sobre esta foto." }
+     story: "La historia que quieras contar." }
 
-Cada foto pertenece a una sección (Cómo nos conocimos, Primeras citas, etc.).
-En el archivo ya están todas las secciones creadas, solo llena las fotos.
+Las secciones (Cómo nos conocimos, Selfies, etc.) ya están creadas.
+Cada foto puede llevar su fecha y una historia escrita por ti.

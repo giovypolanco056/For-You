@@ -1,6 +1,13 @@
 # Herramientas locales de Claude Code / editor
 .claude/
 
+# Álbum: solo se sube la versión optimizada para web (carpeta "web").
+# Los originales pesados y los RAW se quedan en tu PC como respaldo.
+/fotos de album/*
+!/fotos de album/web/
+!/fotos de album/LEE-ESTO.txt
+*.CR3
+
 # Sistema
 Thumbs.db
 .DS_Store
