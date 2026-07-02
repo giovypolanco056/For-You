@@ -767,3 +767,7 @@ const LibraryEngine = (() => {
   return { reveal };
 
 })();
+
+/* Exponer en window: un `const` global NO se adjunta a window por sí solo,
+   y scenes.js / main.js comprueban `window.LibraryEngine` antes de revelar. */
+window.LibraryEngine = LibraryEngine;
