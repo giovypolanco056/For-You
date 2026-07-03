@@ -996,6 +996,370 @@
   margin: 0 0 16px;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   DIÁLOGO DE PERSONAJE (overlay estilo novela visual)
+══════════════════════════════════════════════════════════════ */
+.lib-vnov {
+  position: fixed;
+  inset: 0;
+  z-index: 640;
+  background: rgba(6, 3, 12, 0.86);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  cursor: pointer;
+}
+.lib-vnov.visible { opacity: 1; }
+
+.lib-vnov-sprite {
+  width: clamp(190px, 40vw, 320px);
+  height: auto;
+  max-height: 55dvh;
+  object-fit: contain;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.6));
+  animation: libGreeterIn 1s ease both 0.2s;
+  transition: transform 0.5s ease;
+}
+
+.lib-vnov-sprite.hug { animation: libHugIn 0.8s ease both; }
+@keyframes libHugIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* "Hope mueve las orejas": balanceo suave del abrazo */
+.lib-vnov-sprite.wiggle { animation: libWiggle 1.6s ease-in-out infinite; }
+@keyframes libWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  30%      { transform: rotate(-1.6deg); }
+  70%      { transform: rotate(1.6deg); }
+}
+
+.lib-vnov-dialog {
+  width: min(92vw, 560px);
+  margin-bottom: 26px;
+  background: rgba(15, 5, 30, 0.92);
+  border: 2px solid #f06292;
+  border-radius: 14px;
+  padding: 14px 22px 12px;
+  box-shadow: 0 0 30px rgba(240, 98, 146, 0.25);
+  transition: opacity 0.5s ease;
+  position: relative;
+}
+
+.lib-vnov-name {
+  position: absolute;
+  top: -14px;
+  left: 16px;
+  background: #c2185b;
+  border: 1.5px solid #f06292;
+  border-radius: 8px;
+  padding: 2px 12px;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  color: #fff8f0;
+  letter-spacing: 0.06em;
+}
+
+.lib-vnov-text {
+  margin: 8px 0 0;
+  font-family: 'VT323', monospace;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  line-height: 1.55;
+  color: #fff8f0;
+  min-height: 3em;
+}
+
+/* Hope saltando hacia el personaje (evento de la 4ª visita) */
+.lib-vnov-hope {
+  position: absolute;
+  bottom: 24dvh;
+  right: -140px;
+  width: clamp(80px, 16vw, 120px);
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));
+}
+.lib-vnov-hope.hopping {
+  animation: libHopIn 2s ease-in forwards;
+}
+@keyframes libHopIn {
+  0%   { transform: translate(0, 0); }
+  15%  { transform: translate(-14vw, -60px); }
+  30%  { transform: translate(-26vw, 0); }
+  45%  { transform: translate(-38vw, -50px); }
+  60%  { transform: translate(-48vw, 0); }
+  75%  { transform: translate(-56vw, -40px); }
+  100% { transform: translate(-62vw, 0); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HOPE 🐰, LA GUARDIANA DE LA BIBLIOTECA
+══════════════════════════════════════════════════════════════ */
+.lib-hope {
+  position: fixed;
+  right: 16px;
+  bottom: 10px;
+  z-index: 320;               /* sobre la escena, bajo los lectores */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.lib-hope img {
+  width: clamp(64px, 10vw, 96px);
+  height: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.55));
+  animation: libHopeIdle 5s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+.lib-hope img:hover { transform: scale(1.06); }
+
+@keyframes libHopeIdle {
+  0%, 90%, 100% { transform: translateY(0); }
+  93%           { transform: translateY(-6px); }
+  96%           { transform: translateY(0); }
+}
+
+.lib-hope.boing img { animation: libHopeBoing 0.5s ease; }
+@keyframes libHopeBoing {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-14px) scale(1.05); }
+  70%  { transform: translateY(0) scale(0.97); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.lib-hope-bubble {
+  max-width: min(240px, 64vw);
+  margin: 0 4px 8px 0;
+  padding: 10px 14px;
+  background: rgba(15, 5, 30, 0.92);
+  border: 1.5px solid #f0d98c;
+  border-radius: 12px 12px 2px 12px;
+  font-family: 'VT323', monospace;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  color: #f3e6cf;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.lib-hope-bubble.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════════════
+   GUÍA DE EXPLORADOR (diario de campo del manual)
+══════════════════════════════════════════════════════════════ */
+.lib-guide { position: relative; }
+
+.g-stamp {
+  position: absolute;
+  top: 26px;
+  right: 20px;
+  transform: rotate(9deg);
+  border: 3px double #b5432e;
+  color: #b5432e;
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  padding: 5px 12px;
+  border-radius: 4px;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.g-head { text-align: center; margin-bottom: 22px; }
+.g-overline {
+  font-family: 'VT323', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  color: rgba(80, 40, 20, 0.55);
+  margin-bottom: 6px;
+}
+.g-expedicion {
+  font-family: 'Caveat', 'Noto Serif', cursive;
+  font-size: 1.15rem;
+  color: #7b2d42;
+  margin: 4px 0 0;
+}
+
+/* Ficha del espécimen */
+.g-specimen {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: 1.5px dashed rgba(122, 61, 34, 0.5);
+  border-radius: 8px;
+  padding: 18px 16px 14px;
+  margin-bottom: 18px;
+  background: rgba(255, 248, 230, 0.5);
+}
+
+.g-polaroid {
+  position: relative;
+  flex: 0 0 150px;
+  background: #fff;
+  padding: 7px 7px 22px;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.28);
+  transform: rotate(-3deg);
+}
+.g-polaroid img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+.g-polaroid-cap {
+  font-family: 'Caveat', cursive;
+  font-size: 0.85rem;
+  text-align: center;
+  color: #4a3020;
+  margin-top: 5px;
+  line-height: 1.15;
+}
+.g-tape {
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 74px; height: 22px;
+  background: rgba(222, 200, 140, 0.7);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.g-idcard { flex: 1 1 240px; min-width: 0; }
+.g-species {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.15rem;
+  color: #3d1c0e;
+}
+.g-species em { color: #7b2d42; }
+.g-class {
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: #8a6d2f;
+  letter-spacing: 0.06em;
+  margin: 2px 0;
+}
+.g-status {
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+.g-ficha {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.g-ficha td {
+  padding: 5px 8px;
+  border-bottom: 1px dotted rgba(122, 61, 34, 0.35);
+  vertical-align: top;
+  color: #3d1c0e;
+}
+.g-ficha td:first-child {
+  font-weight: 700;
+  color: #5a3a24;
+  width: 38%;
+}
+.g-ficha-sec { margin: 6px 0 10px; }
+
+/* Campos sueltos (hábitat, comportamiento) */
+.g-field { margin: 10px 0; }
+.g-field-k {
+  display: block;
+  font-family: 'VT323', monospace;
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  color: #5a3a24;
+}
+.g-hand {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  color: #4a3020;
+  line-height: 1.3;
+}
+
+/* Caja de debilidades */
+.g-box {
+  border: 1.5px solid rgba(194, 24, 91, 0.45);
+  border-radius: 8px;
+  background: rgba(194, 24, 91, 0.06);
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+.g-box-title {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.1em;
+  color: #c2185b;
+  margin-bottom: 6px;
+}
+.g-box ul { margin: 0; padding-left: 20px; }
+.g-box li { font-size: 0.92rem; padding: 2px 0; }
+
+/* Secciones del diario */
+.g-sec {
+  margin: 22px 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(122, 61, 34, 0.25);
+}
+.g-sec-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.08rem;
+  color: #5a2a1a;
+  margin: 0 0 8px;
+}
+.g-sec-num {
+  display: block;
+  font-family: 'VT323', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  color: rgba(122, 61, 34, 0.55);
+  margin-bottom: 2px;
+}
+.g-p { font-size: 0.94rem; margin: 6px 0; }
+.g-list { margin: 4px 0 10px; padding-left: 22px; }
+.g-list li { font-size: 0.92rem; padding: 2.5px 0; }
+.g-sub {
+  font-family: 'VT323', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: #5a3a24;
+  margin-top: 10px;
+}
+.g-cierre { margin: 8px 0 0; font-size: 1.3rem; }
+
+/* Advertencia final */
+.g-warn {
+  border: 2px solid #b5432e;
+  border-radius: 8px;
+  background: rgba(181, 67, 46, 0.07);
+  padding: 14px 18px;
+  margin: 22px 0 8px;
+  text-align: center;
+}
+.g-warn-title {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.16em;
+  color: #b5432e;
+  margin-bottom: 6px;
+}
+.g-warn p {
+  margin: 0;
+  font-family: 'Noto Serif', serif;
+  font-style: italic;
+  font-size: 0.98rem;
+}
+
+.g-sign {
+  text-align: right;
+  font-size: 1.35rem;
+  margin-top: 18px;
+  transform: rotate(-1.2deg);
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 560px) {
   .library-shelf { gap: 14px 16px; padding: 14px 10px 0; }
@@ -1004,4 +1368,12 @@
 
   .lib-chapter-date { font-size: 0.72rem; }
   .lib-bunny-sprite { width: 62vw; }
+
+  .lib-vnov-sprite { width: 56vw; }
+  .g-stamp { position: static; display: inline-block; margin-bottom: 10px; transform: rotate(-2deg); }
+  .g-specimen { flex-direction: column; align-items: center; }
+  .g-polaroid { flex-basis: auto; width: 60%; }
+
+  /* dejar sitio para Hope abajo a la derecha */
+  .library-scene { padding-bottom: 130px; }
 }

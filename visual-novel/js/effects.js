@@ -91,6 +91,11 @@ const EffectsEngine = (() => {
       sizeMin:  0.9,
       sizeMax:  1.8,
     },
+    rain: {
+      symbols:  ['💧'],
+      sizeMin:  0.4,
+      sizeMax:  0.8,
+    },
   };
 
   /**

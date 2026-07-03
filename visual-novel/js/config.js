@@ -95,6 +95,30 @@ const SCENE_BACKGROUNDS = {
     overlay: null,
   },
 
+  // Noche lluviosa junto a la ventana (escenas melancólicas)
+  night_window: {
+    type: 'gradient',
+    gradient: 'linear-gradient(180deg, #060b18 0%, #0c1526 45%, #131a30 100%)',
+    particles: null,
+    overlay: 'rgba(90, 130, 200, 0.05)',
+  },
+
+  // Cielo estrellado profundo
+  stars: {
+    type: 'gradient',
+    gradient: 'linear-gradient(180deg, #040818 0%, #0a1030 55%, #150a28 100%)',
+    particles: 'stars',
+    overlay: null,
+  },
+
+  // Noche cálida (gratitud, despedida dulce)
+  warm_night: {
+    type: 'gradient',
+    gradient: 'linear-gradient(180deg, #241026 0%, #331424 50%, #1a0a18 100%)',
+    particles: 'stars',
+    overlay: 'rgba(255, 170, 100, 0.06)',
+  },
+
 };
 
 /* ================================================================
@@ -119,6 +143,14 @@ const AUDIO_CONFIG = {
     src: "assets/audio/vn_bgm.mp3",          // ← cambia esta ruta
     loop: true,
     volume: 0.45,
+  },
+
+  // Piano suave para las escenas melancólicas
+  // (coloca el archivo en assets/audio/; si falta, la escena sigue sin música)
+  pianoSoft: {
+    src: "assets/audio/piano_soft.mp3",
+    loop: true,
+    volume: 0.4,
   },
 
   // Efectos de sonido (pueden ser null para usar síntesis)
@@ -609,7 +641,7 @@ const SCENES = [
     position: 'center',
     effects: ['fade_to_black'],
     musicShift: null,
-    dialog: 
+    dialog: [
       "Pensarías que esto es todo,",
       "Pero en realidad...",
       "No aparecí aquí solo para hablar.",
@@ -633,4 +665,6 @@ const EFFECTS_CONFIG = {
   stars_appear:   { type: 'particles', emitter: 'stars',       count: 25, speed: 'slow'  },
   pixel_kiss:     { type: 'particles', emitter: 'kiss_hearts', count: 12, speed: 'medium'},
   fade_to_black:  { type: 'fade',      duration: 3000 },
+  soft_rain:      { type: 'particles', emitter: 'rain',        count: 16, speed: 'slow'  },
+  soft_stars:     { type: 'particles', emitter: 'stars',       count: 12, speed: 'slow'  },
 };

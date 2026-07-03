@@ -28,6 +28,62 @@ const LIBRARY_CONFIG = {
     ],
   },
 
+  /* ── Hope 🐰, la guardiana de la biblioteca ───────────────────
+     Vive en la biblioteca. Al tocarla dice frases al azar. */
+  hope: {
+    sprite: "assets/sprites/Hope.png",
+    dialogs: [
+      "Pum pum.",
+      "Creo que al Moreno le gustas demasiado.",
+      "He estado cuidando estos recuerdos.",
+      "Todavía no entiendo cómo escribió tantas páginas.",
+      "*mueve la naricita*",
+      "Shhh... los libros están durmiendo.",
+    ],
+  },
+
+  /* ── Introducción de la biblioteca (solo la primera visita) ── */
+  intro: {
+    sprite: "assets/sprites/Talking3_Me.png",
+    lines: [
+      "Oh... llegaste a la biblioteca.",
+      "Creo que este es uno de mis lugares favoritos.",
+      "Porque si lo piensas, nuestra historia siempre ha vivido entre palabras.",
+      "Mensajes.",
+      "Cartas.",
+      "Recuerdos.",
+      "Promesas.",
+      "Todo lo que encontrarás aquí representa una parte distinta de nosotros.",
+      "Algunos libros hablan del pasado.",
+      "Otros del presente.",
+      "Y algunos todavía están esperando ser escritos.",
+      "Así que puedes comenzar por donde quieras.",
+    ],
+  },
+
+  /* ── Evento secreto: cuarta visita a la biblioteca ──────────── */
+  visitEvent: {
+    visita: 4,
+    sprite: "assets/sprites/Missing_Me.png",
+    lines: [
+      "Wao...",
+      "Sí que te gusta hablar conmigo.",
+      "Y eso que ya me estaba empezando a sentir un poco solo.",
+      "Supongo que eso significa que hice bien mi trabajo.",
+      "Aunque ahora tengo un problema.",
+      "Creo que tendré que pedirle al Giovy real una versión digital de ti.",
+      "Porque esto de ser el único personaje consciente aquí empieza a sentirse un poco injusto.",
+      "Además...",
+      "Creo que sería bonito poder hablar contigo también.",
+    ],
+    hugSprite: "assets/sprites/HuggingHope_Me.png",
+    hugLines: [
+      "Al menos te tengo a ti aquí.",
+      "¿Verdad, Hope?",
+      "Aunque debo admitir que preferiría que fuéramos tres.",
+    ],
+  },
+
   /* ==============================================================
      LIBROS
      Cada libro tiene:
@@ -47,6 +103,16 @@ const LIBRARY_CONFIG = {
       appearance: { c1: "#24365e", c2: "#111d3a", ink: "#f0d98c", w: 150, h: 220 },
       // Abre el flipbook en línea (Heyzine)
       url: "https://heyzine.com/flip-book/7ee1fc545a.html",
+      // El Moreno lo presenta la primera vez que se abre
+      explain: {
+        sprite: "assets/sprites/Card_Me.png",
+        lines: [
+          "Bueno...",
+          "Este creo que ya lo conoces.",
+          "Aquí intenté guardar un año entero de amor dentro de unas cuantas páginas.",
+          "Aunque sinceramente creo que todavía faltan muchos capítulos.",
+        ],
+      },
     },
 
     /* ── 📷 2. NUESTRO ÁLBUM ─────────────────────────────────── */
@@ -58,6 +124,15 @@ const LIBRARY_CONFIG = {
       description: "El lugar donde están guardados nuestros momentos.",
       // Apariencia: cuero marrón con polaroid en la portada
       appearance: { c1: "#7a4a28", c2: "#4a2c16", ink: "#f3e6cf", w: 130, h: 190, polaroid: true },
+      explain: {
+        sprite: "assets/sprites/Smiling_Me.png",
+        lines: [
+          "La memoria es extraña.",
+          "Por eso existen las fotografías.",
+          "Para poder volver a sentir algo que ya vivimos.",
+          "Espero que nunca dejemos de llenar este álbum.",
+        ],
+      },
 
       // ► AGREGA TUS FOTOS AQUÍ. Copia las imágenes en la carpeta
       //   "fotos de album" y llena cada sección.
@@ -285,30 +360,178 @@ const LIBRARY_CONFIG = {
       ],
     },
 
-    /* ── 📓 3. MANUAL PARA CUIDAR Y AMAR A MI JOSI ───────────── */
+    /* ── 📓 3. MANUAL PARA CUIDAR Y AMAR A MI JOSI ─────────────
+       Reinterpretado como GUÍA DE EXPLORADOR: un diario de campo
+       científico escrito por alguien profundamente enamorado.  */
     {
       id: "manual",
-      type: "manual",
+      type: "guide",
       title: "Manual para cuidar y amar a mi Josi",
       emoji: "📓",
-      description: "Versión actual: en constante actualización.",
+      description: "Guía de explorador · Versión en constante actualización.",
       // Apariencia: libreta negra con notas adhesivas
       appearance: { c1: "#2b2b30", c2: "#141416", ink: "#f3e6cf", w: 125, h: 185, sticky: true },
+      explain: {
+        sprite: "assets/sprites/Talking3_Me.png",
+        lines: [
+          "Este probablemente sea el libro más importante.",
+          "Aunque técnicamente no es un libro.",
+          "Es una guía de exploración.",
+          "Después de muchos meses de investigación, observación y estudio...",
+          "Llegué a la conclusión de que la especie 'Josi' es extremadamente rara.",
+          "Hermosa.",
+          "Peligrosamente adorable.",
+          "Y completamente imposible de dejar de amar.",
+          "Así que decidí documentar todos mis descubrimientos.",
+        ],
+      },
 
-      // ► PEGA AQUÍ EL TEXTO DE CADA CAPÍTULO cuando lo tengas.
-      //   Deja "body" vacío ("") y aparecerá "Próximamente...".
-      chapters: [
-        { title: "Qué hacer cuando está triste", body: "" },
-        { title: "Qué hacer cuando sobrepiensa", body: "" },
-        { title: "Cómo hacerla reír", body: "" },
-        { title: "Cosas que ama", body: "" },
-        { title: "Cosas que odia", body: "" },
-        { title: "Cómo saber si está molesta", body: "" },
-        { title: "Cómo hacerla sentir amada", body: "" },
-        { title: "Protocolo de emergencia cuando tiene inseguridades", body: "" },
-        { title: "Protocolo de emergencia cuando está celosa", body: "" },
-        { title: "Recordatorio: abrazarla más", body: "" },
-      ],
+      guide: {
+        stamp: "ESPECIE PROTEGIDA",
+        expedicion: "Expedición permanente · Iniciada el 7 de diciembre de 2023",
+        especie: "Josius Adorabilis",
+        clasificacion: "Criatura extraordinaria · Extremadamente rara",
+        estado: "Bajo protección y amor permanentes",
+        foto: "../fotos de album/web/IMG-20260628-WA0072.jpg",
+        fotoCaption: "Espécimen observado en su hábitat natural.",
+        ficha: [
+          ["Nombre completo", "Josielys Adahias de la Cruz Báez"],
+          ["Nombre común", "Josi · Mi Josi"],
+          ["Fecha de nacimiento", "8 de marzo de 2008"],
+          ["Fe", "Cristiana"],
+          ["Cosa que más ama en el mundo", "Dormir"],
+          ["Festividad favorita", "Navidad 🎄"],
+          ["Datos adicionales", "Bastante terca, muy animada. El 11 de marzo cumple 7 años siendo ARMY (2026)."],
+        ],
+        habitat: "Cerca de personas que ama y decoraciones navideñas.",
+        comportamiento: "Tiende a preocuparse más por otros que por sí misma.",
+        debilidades: [
+          "Villancicos",
+          "BTS",
+          "Personas que la abrazan fuerte",
+          "El Moreno",
+        ],
+        advertencia: "Una vez que conoces a esta especie, existe una alta probabilidad de enamorarte permanentemente.",
+
+        secciones: [
+          {
+            icon: "💗", titulo: "Principio fundamental",
+            parrafos: [
+              "A mi Josi no se le ama a medias. Se le ama con paciencia, atención, ternura y respeto. Su bienestar emocional y físico siempre es prioridad.",
+              "Le amo desde 3 pilares fundamentales:",
+            ],
+            lista: [
+              "Atracción: me parece la persona más hermosa en la faz de la tierra.",
+              "Afecto: amo pasar el tiempo con ella.",
+              "Admiración: le amo porque sé de lo que es capaz.",
+            ],
+            cierre: "Desde el cuerpo, la mente y el corazón es que puedo decir realmente que le amo.",
+          },
+          {
+            icon: "🔬", titulo: "Observaciones de campo",
+            campos: [
+              ["Vocación detectada", "Quiere estudiar medicina."],
+              ["Conocimiento especial", "Sabe mucho sobre alimentos: hizo un técnico en ello."],
+              ["Medidas", "XS en top (excepto algunos t-shirts oversize) · pantalón de tiro bajo y suelto."],
+              ["Maquillaje", "C14 en rubor."],
+              ["Marcas distintivas", "Un lunar en el hombro derecho."],
+            ],
+          },
+          {
+            icon: "📅", titulo: "Registro histórico (nunca olvidar)",
+            campos: [
+              ["Primer contacto", "7 de diciembre de 2023 · en el MUN del Politécnico Máximo Gómez ❤️"],
+              ["Inicio del vínculo", "8 de julio de 2025 · nos hicimos novios 💜"],
+            ],
+            cierre: "Estas fechas importan. Recordarlas y honrarlas es parte de amarla.",
+          },
+          {
+            icon: "🎨", titulo: "Gustos que la hacen sonreír",
+            campos: [
+              ["Flor favorita", "Girasoles 🌻"],
+              ["Animal favorito", "Todos 🐶"],
+              ["Colores favoritos", "Morado 🟣 y negro ⚫"],
+              ["Géneros favoritos", "Terror 😱 y fantasía 🧚"],
+              ["Películas y series", "Welcome to Derry · Los Juegos del Hambre · Bridgerton · Grey's Anatomy"],
+              ["Animes", "Black Clover · Kimetsu no Yaiba · Solo Leveling (no anda viendo muchos)"],
+              ["Lectura", "Actualmente lee 'Alas de Ónix'. Compra sus libros en SDQ. Su género favorito es la fantasía."],
+              ["Música", "BTS (en especial Yoongi) · Milo J · Humbe · Isabel Valdez"],
+              ["Deportes", "Fórmula 1 (Max Verstappen lover) 🏎 · Béisbol (liceísta hasta la médula 🐯)"],
+            ],
+          },
+          {
+            icon: "🍝", titulo: "Alimentación (reglas IMPORTANTES)",
+            grupos: [
+              { sub: "✅ Comidas que le gustan",
+                lista: ["Pasta 🍝 (lasaña, espagueti)", "Plátano 🍌 (fritos, mangú)", "Pan"] },
+              { sub: "✅ Bebidas",
+                lista: ["Café helado ☕ (malteada de Koncafé)", "Jugo de naranja Rica 🍊"] },
+              { sub: "✅ Postres y frutas",
+                lista: ["Chocolate 🍫", "Helado (chocolate y dulce de leche)", "Fresas 🍓",
+                        "Yogen (fruto del bosque, kiwi y fresa)",
+                        "Piña 🍍 — ⚠ ES ALÉRGICA (vigilar de cerca al espécimen)",
+                        "Bizcocho", "Galletas", "Cupcakes", "Donas", "Flan", "Cheesecake", "Churros"] },
+              { sub: "❌ Lo que NO le gusta",
+                lista: ["Huevo 🥚", "Yuca 🍠", "Pera 🍐", "Manzana 🍎", "Ketchup 🍅", "Cosas demasiado dulces"] },
+            ],
+          },
+          {
+            icon: "👥", titulo: "Personas importantes para ella",
+            grupos: [
+              { sub: "Amigos",
+                lista: ["Mejor amiga: Mila", "Mejor amigo: Yoniel", "Amiga muy cercana: Angélica"] },
+              { sub: "Familia",
+                lista: [
+                  "Sobrina: Ana — su adoración (cumple el 29 de diciembre, tiene 4 años)",
+                  "Sobrina más pequeña: Anahia (1 año)",
+                  "Su papá: Bienvenido de la Cruz 'Nenito' (cumple el 30 de diciembre)",
+                  "Su mamá: Roberta Báez",
+                  "Hermano mayor: Josías (la saga Souls y los videojuegos; estudia lo mismo que yo)",
+                  "Hermano menor: Uzías (le gusta Fortnite)",
+                  "Prima: Abi",
+                ] },
+            ],
+            cierre: "Respetar y cuidar a quienes ella ama es parte de cuidarla a ella.",
+          },
+          {
+            icon: "🩺", titulo: "Salud y cuidados (máxima atención)",
+            grupos: [
+              { sub: "Menstruación",
+                lista: ["Le llega alrededor de los días 22 - 26", "Le dura dos días", "Toallas que utiliza: Nosotras normales"] },
+              { sub: "Condiciones a considerar",
+                lista: [
+                  "Pre-ataques de asma parciales por sobreesfuerzo",
+                  "Migraña y dolores de cabeza por la vista",
+                  "Problemas alimenticios (puede bajar de peso muy fácilmente)",
+                  "Defensas bajas",
+                  "Vomita a veces (sospecho que del estrés)",
+                ] },
+              { sub: "Medicación",
+                lista: ["Migraña: Winasord y omeprazol", "Problemas alimenticios y bajada de peso: vitaminas (a veces inyectadas)"] },
+              { sub: "Protocolo del explorador",
+                lista: ["👉 Evitar que se sobreesfuerce.", "👉 Estar atento a señales de cansancio o dolor.", "👉 Priorizar su descanso y alimentación."] },
+            ],
+          },
+          {
+            icon: "🤍", titulo: "Cómo amarla bien",
+            lista: [
+              "Escuchar sin minimizar lo que siente.",
+              "Cuidarla sin hacerla sentir débil.",
+              "Protegerla sin controlar.",
+              "Recordarle que no está sola.",
+              "Elegirla todos los días, incluso en los difíciles.",
+              "Se le olvidan las cosas, pero no es a propósito.",
+            ],
+          },
+          {
+            icon: "🫶", titulo: "No olvidar",
+            parrafos: [
+              "Josielys no es solo mi novia. Es mi alegría, mi ternura y mi elección diaria.",
+            ],
+            cierre: "Amarla es un compromiso consciente, y hacerla feliz es una decisión constante.",
+          },
+        ],
+      },
     },
 
     /* ── 💿 4. TOCADISCOS ────────────────────────────────────── */
@@ -320,6 +543,14 @@ const LIBRARY_CONFIG = {
       description: "La banda sonora de nosotros.",
       // Apariencia: tono madera/dorado antiguo
       appearance: { c1: "#5a3f24", c2: "#2e1f12", ink: "#f0d98c", w: 130, h: 175 },
+      explain: {
+        sprite: "assets/sprites/Singing_Me.png",
+        lines: [
+          "Hay canciones que dejan de ser canciones.",
+          "Y se convierten en recuerdos.",
+          "Muchas de estas tienen tu nombre.",
+        ],
+      },
 
       // ► AGREGA AUDIO Y PORTADAS. Copia los archivos en la carpeta
       //   "disco" y llena cover/audio/story de cada canción.
@@ -344,6 +575,14 @@ const LIBRARY_CONFIG = {
       // Apariencia: gris, desgastado
       appearance: { c1: "#5c5c60", c2: "#3a3a3e", ink: "#d8d8d8", w: 118, h: 178 },
       // El contenido y el auto-cierre están definidos en el motor.
+      explain: {
+        sprite: "assets/sprites/Thinking_Me.png",
+        lines: [
+          "Ese libro apareció de la nada.",
+          "Pero siempre me daban toques eléctricos al tocarlo.",
+          "Supongo que no funciona ese intento.",
+        ],
+      },
     },
 
     /* ── ❤️ 6. RAZONES POR LAS QUE TE AMO (paginado) ─────────── */
@@ -355,6 +594,14 @@ const LIBRARY_CONFIG = {
       description: "Versión resumida.",
       // Apariencia: rojo muy grueso
       appearance: { c1: "#9c1330", c2: "#5a0a1c", ink: "#ffe0e6", w: 150, h: 195 },
+      explain: {
+        sprite: "assets/sprites/InLove_Me.png",
+        lines: [
+          "Este libro tiene un problema.",
+          "Cada vez que creo haberlo terminado...",
+          "Encuentro otra razón y vuelvo a escribir.",
+        ],
+      },
 
       // ► Cada elemento es una página/razón, en orden.
       //   Agrega tantas como quieras (la idea es que sean muchas).
@@ -476,6 +723,14 @@ const LIBRARY_CONFIG = {
       description: "No abrir hasta haber vivido más.",
       // Apariencia: blanco con bordes dorados
       appearance: { c1: "#efe9dc", c2: "#d8cfb8", ink: "#8a6d2f", w: 128, h: 200 },
+      explain: {
+        sprite: "assets/sprites/Showing_Me.png",
+        lines: [
+          "Este libro todavía no está terminado.",
+          "Porque algunas de nuestras mejores historias aún no han ocurrido.",
+          "Y creo que eso es lo más bonito.",
+        ],
+      },
 
       // ► Cada capítulo se desbloquea un sábado (año, mes-1, día).
       //   Antes de su fecha aparece cerrado con candado.
@@ -497,6 +752,14 @@ const LIBRARY_CONFIG = {
       description: "Acceso restringido.",
       // Apariencia: negro con candado dorado
       appearance: { c1: "#17171c", c2: "#050508", ink: "#f0d98c", w: 122, h: 188, lock: true },
+      explain: {
+        sprite: "assets/sprites/Concerned_Me.png",
+        lines: [
+          "No.",
+          "Este todavía no.",
+          "Algunas cosas necesitan esperar su momento.",
+        ],
+      },
 
       // ► Tipos de requisito:
       //   "rabbits" → se marca solo al encontrar los 5 conejitos
@@ -565,9 +828,24 @@ const LibraryEngine = (() => {
       requestAnimationFrame(() => scene.classList.add('visible'));
     });
 
-    // Si encontró los 5 conejitos pero la escena quedó pendiente
-    if (allRabbitsFound() && !Progress.get('bunny_scene_seen', false)) {
+    // ── Contador de visitas y eventos automáticos ────────────
+    const visits = (Progress.get('visits', 0) || 0) + 1;
+    Progress.set('visits', visits);
+
+    const bunnyPending = allRabbitsFound() && !Progress.get('bunny_scene_seen', false);
+    const ve = LIBRARY_CONFIG.visitEvent;
+
+    if (bunnyPending) {
+      // La escena de los conejitos quedó pendiente: tiene prioridad
       setTimeout(() => playBunnyScene(), 4000);
+    } else if (visits === 1 && LIBRARY_CONFIG.intro) {
+      // Primera visita: el Moreno presenta la biblioteca
+      setTimeout(() => {
+        playCharacterDialog(LIBRARY_CONFIG.intro.sprite, LIBRARY_CONFIG.intro.lines);
+      }, 2600);
+    } else if (ve && visits >= ve.visita && !Progress.get('visit_event_seen', false)) {
+      // Cuarta visita (o más, si antes hubo otro evento): evento secreto
+      setTimeout(() => playVisitEvent(), 2600);
     }
   }
 
@@ -617,6 +895,210 @@ const LibraryEngine = (() => {
     scene.appendChild(dust);
     scene.appendChild(header);
     scene.appendChild(wrap);
+
+    // Hope vive en la biblioteca 🐰
+    buildHope();
+  }
+
+  /* ── Hope, la guardiana de la biblioteca ───────────────────── */
+  let hopeLastLine = -1;
+  let hopeHideTimer = null;
+
+  function buildHope() {
+    const cfg = LIBRARY_CONFIG.hope;
+    if (!cfg || !cfg.sprite) return;
+
+    const el = document.createElement('div');
+    el.className = 'lib-hope';
+    el.innerHTML = `
+      <div class="lib-hope-bubble" id="lib-hope-bubble"></div>
+      <img src="${cfg.sprite}" alt="Hope" draggable="false">
+    `;
+    scene.appendChild(el);
+
+    el.querySelector('img').addEventListener('click', () => {
+      const bubble = el.querySelector('#lib-hope-bubble');
+      const lines = cfg.dialogs || [];
+      if (!lines.length) return;
+
+      let i;
+      do { i = Math.floor(Math.random() * lines.length); }
+      while (lines.length > 1 && i === hopeLastLine);
+      hopeLastLine = i;
+
+      bubble.textContent = lines[i];
+      bubble.classList.add('visible');
+      el.classList.remove('boing');
+      void el.offsetWidth;
+      el.classList.add('boing');
+
+      clearTimeout(hopeHideTimer);
+      hopeHideTimer = setTimeout(() => bubble.classList.remove('visible'), 3400);
+    });
+  }
+
+  /* ── Diálogo de personaje (overlay estilo novela visual) ───── */
+  function playCharacterDialog(sprite, lines, onDone) {
+    const ov = document.createElement('div');
+    ov.className = 'lib-vnov';
+    ov.innerHTML = `
+      <img class="lib-vnov-sprite" src="${sprite}" alt="el moreno" draggable="false">
+      <div class="lib-vnov-dialog">
+        <div class="lib-vnov-name">el moreno</div>
+        <p class="lib-vnov-text"></p>
+        <span class="lib-greeter-next" style="visibility:hidden;">▼</span>
+      </div>
+      <div class="lib-bunny-hint">toca para continuar</div>
+    `;
+    document.body.appendChild(ov);
+    setTimeout(() => ov.classList.add('visible'), 40);
+
+    const textEl = ov.querySelector('.lib-vnov-text');
+    const nextEl = ov.querySelector('.lib-greeter-next');
+    let line = 0, typing = null;
+
+    function typeLine() {
+      const full = lines[line];
+      let i = 0;
+      textEl.textContent = '';
+      nextEl.style.visibility = 'hidden';
+      typing = setInterval(() => {
+        if (i >= full.length) {
+          clearInterval(typing); typing = null;
+          nextEl.style.visibility = 'visible';
+          return;
+        }
+        textEl.textContent += full[i++];
+      }, 30);
+    }
+
+    let finished = false;   // evita que toques rápidos repitan el cierre
+    ov.addEventListener('click', () => {
+      if (finished) return;
+      if (typing) {
+        clearInterval(typing); typing = null;
+        textEl.textContent = lines[line];
+        nextEl.style.visibility = 'visible';
+        return;
+      }
+      line++;
+      if (line >= lines.length) {
+        finished = true;
+        ov.classList.remove('visible');
+        setTimeout(() => {
+          ov.remove();
+          if (onDone) onDone();
+        }, 700);
+        return;
+      }
+      typeLine();
+    });
+
+    setTimeout(typeLine, 700);
+    return ov;
+  }
+
+  /* ── Música: bajar y restaurar suavemente ──────────────────── */
+  function duckMusic() {
+    try { if (window.AudioEngine) AudioEngine.reduceBGMVolume(0.05, 900); } catch (e) {}
+    if (audioEl) { audioEl.__prevVol = audioEl.volume; audioEl.volume = 0.25; }
+  }
+  function restoreMusic() {
+    try { if (window.AudioEngine) AudioEngine.reduceBGMVolume(0.15, 1800); } catch (e) {}
+    if (audioEl && audioEl.__prevVol != null) audioEl.volume = audioEl.__prevVol;
+  }
+
+  /* ── Evento secreto: cuarta visita ─────────────────────────── */
+  function playVisitEvent() {
+    const ve = LIBRARY_CONFIG.visitEvent;
+    if (!ve || Progress.get('visit_event_seen', false)) return;
+    Progress.set('visit_event_seen', true);
+
+    // Fase 1: el Moreno sentado, sintiéndose un poco solo
+    playCharacterDialog(ve.sprite, ve.lines, () => phase2());
+
+    let phase2Started = false;
+    function phase2() {
+      if (phase2Started) return;
+      phase2Started = true;
+      const ov2 = document.createElement('div');
+      ov2.className = 'lib-vnov';
+      ov2.innerHTML = `
+        <img class="lib-vnov-sprite" src="${ve.sprite}" alt="el moreno" draggable="false">
+        <img class="lib-vnov-hope" src="${LIBRARY_CONFIG.hope.sprite}" alt="Hope" draggable="false">
+        <div class="lib-vnov-dialog" style="opacity:0;">
+          <div class="lib-vnov-name">el moreno</div>
+          <p class="lib-vnov-text"></p>
+          <span class="lib-greeter-next" style="visibility:hidden;">▼</span>
+        </div>
+      `;
+      document.body.appendChild(ov2);
+      setTimeout(() => ov2.classList.add('visible'), 40);
+
+      const spriteEl = ov2.querySelector('.lib-vnov-sprite');
+      const hopeEl   = ov2.querySelector('.lib-vnov-hope');
+      const dialogEl = ov2.querySelector('.lib-vnov-dialog');
+      const textEl   = ov2.querySelector('.lib-vnov-text');
+      const nextEl   = ov2.querySelector('.lib-greeter-next');
+
+      // Hope entra saltando desde el lado derecho
+      setTimeout(() => hopeEl.classList.add('hopping'), 600);
+      duckMusic();
+
+      // Al llegar: el abrazo
+      setTimeout(() => {
+        hopeEl.style.display = 'none';
+        spriteEl.src = ve.hugSprite;
+        spriteEl.classList.add('hug');
+        dialogEl.style.opacity = '1';
+        startHugLines();
+      }, 2600);
+
+      let line = 0, typing = null;
+      function typeLine() {
+        const full = ve.hugLines[line];
+        let i = 0;
+        textEl.textContent = '';
+        nextEl.style.visibility = 'hidden';
+        typing = setInterval(() => {
+          if (i >= full.length) {
+            clearInterval(typing); typing = null;
+            nextEl.style.visibility = 'visible';
+            return;
+          }
+          textEl.textContent += full[i++];
+        }, 34);
+      }
+
+      function startHugLines() {
+        typeLine();
+        let done = false;   // evita repetir el cierre con toques rápidos
+        ov2.addEventListener('click', () => {
+          if (done) return;
+          if (typing) {
+            clearInterval(typing); typing = null;
+            textEl.textContent = ve.hugLines[line];
+            nextEl.style.visibility = 'visible';
+            return;
+          }
+          line++;
+          if (line >= ve.hugLines.length) {
+            done = true;
+            // Hope "mueve las orejas": pequeño balanceo del abrazo,
+            // unos segundos de silencio y la escena se despide
+            dialogEl.style.opacity = '0';
+            spriteEl.classList.add('wiggle');
+            setTimeout(() => {
+              ov2.classList.remove('visible');
+              restoreMusic();
+              setTimeout(() => ov2.remove(), 1600);
+            }, 3600);
+            return;
+          }
+          typeLine();
+        });
+      }
+    }
   }
 
   /* ── Construir un libro individual ─────────────────────────── */
@@ -663,10 +1145,23 @@ const LibraryEngine = (() => {
 
   /* ── Abrir un libro (según su tipo) ────────────────────────── */
   function openBook(book) {
+    // La primera vez, el Moreno aparece a presentar el libro
+    if (book.explain && !Progress.get('explained_' + book.id, false)) {
+      Progress.set('explained_' + book.id, true);
+      playCharacterDialog(book.explain.sprite, book.explain.lines, () => {
+        openBookContent(book);
+      });
+      return;
+    }
+    openBookContent(book);
+  }
+
+  function openBookContent(book) {
     switch (book.type) {
       case 'pdf':     openReader(book, renderPDF(book)); break;
       case 'album':   openReader(book, renderAlbum(book), 'lib-album-panel'); break;
       case 'manual':  openReader(book, renderChapters(book, false), 'lib-manual-panel'); break;
+      case 'guide':   openReader(book, renderGuide(book), 'lib-manual-panel'); break;
       case 'records': openReader(book, renderRecords(book), 'lib-record-panel-wrap'); break;
       case 'error':   openError(book); break;
       case 'reasons': openReader(book, renderReasons(book), 'lib-reasons-wrap'); break;
@@ -872,13 +1367,94 @@ const LibraryEngine = (() => {
       });
     });
 
-    // Conejito oculto #3: al final del manual
-    if (!isFuture) {
-      const spot = document.createElement('div');
-      spot.className = 'lib-rabbit-spot';
-      placeRabbit(spot, 'manual', '');
-      wrap.appendChild(spot);
+    return wrap;
+  }
+
+  /* ── Libro 3: Guía de Explorador (diario de campo) ─────────── */
+  function renderGuide(book) {
+    const g = book.guide || {};
+    const wrap = document.createElement('div');
+    wrap.className = 'lib-paper lib-guide';
+
+    let html = `
+      <div class="g-stamp">${esc(g.stamp || 'CONFIDENCIAL')}</div>
+      <div class="g-head">
+        <div class="g-overline">DIARIO DE CAMPO · GUÍA DE EXPLORADOR</div>
+        <h2 class="lib-reader-title">${esc(book.title)}</h2>
+        <p class="g-expedicion">${esc(g.expedicion || '')}</p>
+      </div>
+
+      <div class="g-specimen">
+        ${g.foto ? `
+          <div class="g-polaroid">
+            <span class="g-tape"></span>
+            <img src="${encodeURI(g.foto)}" alt="espécimen" loading="lazy"
+                 onerror="this.closest('.g-polaroid').style.display='none'">
+            <div class="g-polaroid-cap">${esc(g.fotoCaption || '')}</div>
+          </div>` : ''}
+        <div class="g-idcard">
+          <div class="g-species">Especie: <em>${esc(g.especie || '')}</em></div>
+          <div class="g-class">${esc(g.clasificacion || '')}</div>
+          <div class="g-status">Estado: ${esc(g.estado || '')}</div>
+          <table class="g-ficha">
+            ${(g.ficha || []).map(([k, v]) =>
+              `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}
+          </table>
+        </div>
+      </div>
+
+      ${g.habitat ? `
+        <div class="g-field"><span class="g-field-k">📍 Hábitat natural</span>
+        <span class="g-hand">"${esc(g.habitat)}"</span></div>` : ''}
+      ${g.comportamiento ? `
+        <div class="g-field"><span class="g-field-k">🔎 Comportamiento observado</span>
+        <span class="g-hand">"${esc(g.comportamiento)}"</span></div>` : ''}
+
+      ${g.debilidades && g.debilidades.length ? `
+        <div class="g-box">
+          <div class="g-box-title">💘 Debilidades documentadas</div>
+          <ul>${g.debilidades.map(d => `<li>${esc(d)}</li>`).join('')}</ul>
+        </div>` : ''}
+    `;
+
+    (g.secciones || []).forEach((sec, i) => {
+      html += `<section class="g-sec">
+        <h3 class="g-sec-title"><span class="g-sec-num">Entrada ${String(i + 1).padStart(2, '0')}</span>
+          ${sec.icon || ''} ${esc(sec.titulo)}</h3>`;
+      (sec.parrafos || []).forEach(p => { html += `<p class="g-p">${esc(p)}</p>`; });
+      if (sec.campos && sec.campos.length) {
+        html += `<table class="g-ficha g-ficha-sec">
+          ${sec.campos.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}
+        </table>`;
+      }
+      if (sec.lista && sec.lista.length) {
+        html += `<ul class="g-list">${sec.lista.map(li => `<li>${esc(li)}</li>`).join('')}</ul>`;
+      }
+      (sec.grupos || []).forEach(gr => {
+        html += `<div class="g-sub">${esc(gr.sub)}</div>
+          <ul class="g-list">${(gr.lista || []).map(li => `<li>${esc(li)}</li>`).join('')}</ul>`;
+      });
+      if (sec.cierre) html += `<p class="g-hand g-cierre">${esc(sec.cierre)}</p>`;
+      html += `</section>`;
+    });
+
+    if (g.advertencia) {
+      html += `
+        <div class="g-warn">
+          <div class="g-warn-title">⚠ ADVERTENCIA DEL EXPLORADOR</div>
+          <p>"${esc(g.advertencia)}"</p>
+        </div>`;
     }
+
+    html += `<p class="g-hand g-sign">— El explorador que nunca dejará de estudiarla.</p>`;
+
+    wrap.innerHTML = html;
+
+    // Conejito oculto #3: al final de la guía
+    const spot = document.createElement('div');
+    spot.className = 'lib-rabbit-spot';
+    placeRabbit(spot, 'manual', '');
+    wrap.appendChild(spot);
 
     return wrap;
   }
