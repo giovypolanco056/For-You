@@ -513,113 +513,95 @@ const SCENES = [
       "Siempre desearía cinco minutos más."
     ],
 },
-  /* ── ESCENA 10: Entender el miedo ───────────────────────── */
-  {
-    id: 'understanding',
+{
+    id: 'missing',
     sprite: 'MissingStanding',
-    background: 'cozy',
+    background: 'night_window',
+    position: 'center',
+    effects: ['soft_rain'],
+    musicShift: 'pianoSoft',
+    dialog: [
+      "Creo que James Arthur tenía razón.",
+      "Lo peor nunca ha sido despedirme.",
+      "Lo peor siempre ha sido el momento exacto después.",
+      "Ese instante donde ya no puedo tomar tu mano y pienso que...",
+      "Debí abrazarla más...",
+      "Y me voy alejando más y más, y desde ese momento empiezo a extrañarte",
+      "Odio tener volver a fingir que hablarte por teléfono es suficiente.",
+    ],
+},
+
+{
+    id: 'confession2',
+    sprite: 'Concerned',
+    background: 'night_window',
     position: 'center',
     effects: [],
     musicShift: null,
     dialog: [
-      "Porque si hay algo que he aprendido...",
-      "Es que amar a alguien también significa entender que a veces tiene miedo.",
+      "Porque la verdad...",
+      "Nunca lo es.",
+      "Nunca he sentido que unas cuantas horas contigo sean suficientes.",
+      "Nunca he sentido que un abrazo dure lo necesario.",
+      "Nunca he sentido que un beso fue suficiente.",
+      "Y honestamente espero que nunca llegue a serlo.",
     ],
-  },
+},
 
-  /* ── ESCENA 11: Las despedidas ──────────────────────────── */
-  {
-    id: 'goodbyes',
-    sprite: 'MissingSitDown',
-    background: 'night_sky',
+{
+    id: 'promise',
+    sprite: 'Talking3',
+    background: 'stars',
     position: 'center',
-    effects: ['stars_appear'],
+    effects: ['soft_stars'],
     musicShift: null,
     dialog: [
-      "Y si soy completamente sincero...",
-      "Hay algo que nunca me acostumbro a sentir.",
-      "Las despedidas.",
-      "Porque no importa si es un Uber.",
-      "Un autobús.",
-      "Un carro.",
-      "Un avión.",
-      "O incluso un Allison Lee.",
-      "Cualquier cosa que me aleje de ti siempre se siente demasiado lejos.",
+      "Porque creo que existe algo bonito en extrañarte.",
+      "Significa que todavía quiero más tiempo contigo.",
+      "Más conversaciones.",
+      "Más abrazos.",
+      "Más joderte la paciencia.",
+      "Más juegos.",
+      "Más Chismes.",
+      "Más... nosotros.",
     ],
-  },
+},
 
-  /* ── ESCENA 12: El momento más difícil ──────────────────── */
-  {
-    id: 'hardest_part',
-    sprite: 'Crying',
-    background: 'night_sky',
+{
+    id: 'meta',
+    sprite: 'Thinking',
+    background: 'stars',
     position: 'center',
     effects: [],
     musicShift: null,
     dialog: [
-      "Porque la parte más difícil de cada encuentro...",
-      "Siempre ha sido el momento de partir.",
+      "Aunque ahora que lo pienso...",
+      "Debe ser aun más extraño para ti.",
+      "Acabas de pasar un aniversario conmigo.",
+      "Y ahora estás hablando conmigo.",
+      "Pero conmigo del pasado.",
+      "Que además vive dentro de tu telefono.",
+      "La tecnología es rara pero es la vuelta.",
     ],
-  },
+},
 
-  /* ── ESCENA 13: La gratitud ──────────────────────────────── */
-  {
+{
     id: 'gratitude',
     sprite: 'Smiling',
-    background: 'cozy',
+    background: 'warm_night',
     position: 'center',
     effects: ['warm_glow'],
     musicShift: null,
     dialog: [
-      "Pero también he descubierto algo.",
-      "Que incluso después de cada despedida...",
-      "Siempre termino agradeciendo.",
+      "Pero bueno, si llegaste hasta aquí...",
+      "Gracias.",
+      "Gracias por leer el libro.",
+      "Gracias por encontrar el secreto.",
+      "Gracias por escuchar a esta versión extraña y digital de mí.",
+      "Y sobre todo...",
+      "Gracias por haber decidido compartir tu vida conmigo.",
     ],
-  },
-
-  /* ── ESCENA 14: El regalo divino ─────────────────────────── */
-  {
-    id: 'divine',
-    sprite: 'LoveInEyes',
-    background: 'hearts_fill',
-    position: 'center',
-    effects: ['hearts_burst'],
-    musicShift: null,
-    dialog: [
-      "Porque entre todas las personas del mundo...",
-      "Dios decidió cruzar mi camino con el tuyo.",
-    ],
-  },
-
-  /* ── ESCENA 15: El momento cómico ───────────────────────── */
-  {
-    id: 'not_fair',
-    sprite: 'Angry',
-    background: 'default',
-    position: 'center',
-    effects: [],
-    musicShift: null,
-    dialog: [
-      "Aunque sigo pensando que no es justo.",
-      "No es justo que seas tan linda.",
-    ],
-  },
-
-  /* ── ESCENA 16: El beso virtual ─────────────────────────── */
-  {
-    id: 'kiss',
-    sprite: 'Kissing',
-    background: 'hearts_fill',
-    position: 'center',
-    effects: ['hearts_burst', 'pixel_kiss'],
-    musicShift: null,
-    dialog: [
-      "Mientras volvemos a vernos...",
-      "Aquí tienes un beso virtual.",
-    ],
-  },
-
-  /* ── ESCENA FINAL: La revelación ────────────────────────── */
+},
   {
     id: 'finale',
     sprite: 'Showing',
@@ -627,7 +609,8 @@ const SCENES = [
     position: 'center',
     effects: ['fade_to_black'],
     musicShift: null,
-    dialog: [
+    dialog: 
+      "Pensarías que esto es todo,",
       "Pero en realidad...",
       "No aparecí aquí solo para hablar.",
       "Vine a mostrarte algo.",
