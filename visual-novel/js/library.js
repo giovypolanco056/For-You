@@ -33,12 +33,12 @@ const LIBRARY_CONFIG = {
   hope: {
     sprite: "assets/sprites/Hope.png",
     dialogs: [
-      "Pum pum.",
+      "Hola Ada.",
       "Creo que al Moreno le gustas demasiado.",
-      "He estado cuidando estos recuerdos.",
-      "Todavía no entiendo cómo escribió tantas páginas.",
+      "Arrouba.",
+      "Todavía no entiendo cómo ese prieto escribió tantas páginas.",
       "*mueve la naricita*",
-      "Shhh... los libros están durmiendo.",
+      "Donde entra un tijerazo entra un pincel, decía mi abuelo.",
     ],
   },
 
@@ -46,17 +46,14 @@ const LIBRARY_CONFIG = {
   intro: {
     sprite: "assets/sprites/Talking3_Me.png",
     lines: [
-      "Oh... llegaste a la biblioteca.",
-      "Creo que este es uno de mis lugares favoritos.",
-      "Porque si lo piensas, nuestra historia siempre ha vivido entre palabras.",
+      "Esta es nuestra biblioteca.",
+      "Creo que este es uno de mis lugares favoritos, y ahora lo quiero compartir contigo.",
+      "Si lo piensas, nuestra historia siempre ha vivido entre palabras.",
       "Mensajes.",
-      "Cartas.",
+      "Llamadas.",
       "Recuerdos.",
-      "Promesas.",
       "Todo lo que encontrarás aquí representa una parte distinta de nosotros.",
-      "Algunos libros hablan del pasado.",
-      "Otros del presente.",
-      "Y algunos todavía están esperando ser escritos.",
+      "Esta biblioteca contiene todo nuestro año desde mi perspectiva, todo lo que he recopilado de nosotros y más.",
       "Así que puedes comenzar por donde quieras.",
     ],
   },
@@ -109,8 +106,9 @@ const LIBRARY_CONFIG = {
         lines: [
           "Bueno...",
           "Este creo que ya lo conoces.",
-          "Aquí intenté guardar un año entero de amor dentro de unas cuantas páginas.",
-          "Aunque sinceramente creo que todavía faltan muchos capítulos.",
+          "Aquí lo tienes en versión digital por si quieres leerlo nuevamente en algun otro momento.",
+          "Aunque puede que esta versión tenga algunos detallitos...",
+           "En fin, lo dejo en ti",
         ],
       },
     },
@@ -127,10 +125,10 @@ const LIBRARY_CONFIG = {
       explain: {
         sprite: "assets/sprites/Smiling_Me.png",
         lines: [
-          "La memoria es extraña.",
+          "La memoria es extraña realmente.",
           "Por eso existen las fotografías.",
-          "Para poder volver a sentir algo que ya vivimos.",
-          "Espero que nunca dejemos de llenar este álbum.",
+          "Y como amo con todo mi ser tomarte fotitos, debía haber un lugar donde guardarlas.",
+          "Para eso tenemos aquí el albuuum!!.",
         ],
       },
 
@@ -406,10 +404,10 @@ const LIBRARY_CONFIG = {
         habitat: "Cerca de personas que ama y decoraciones navideñas.",
         comportamiento: "Tiende a preocuparse más por otros que por sí misma.",
         debilidades: [
-          "Villancicos",
+          "El Pan",
           "BTS",
-          "Personas que la abrazan fuerte",
-          "El Moreno",
+          "Su familia",
+          "Yo",
         ],
         advertencia: "Una vez que conoces a esta especie, existe una alta probabilidad de enamorarte permanentemente.",
 
@@ -417,8 +415,8 @@ const LIBRARY_CONFIG = {
           {
             icon: "💗", titulo: "Principio fundamental",
             parrafos: [
-              "A mi Josi no se le ama a medias. Se le ama con paciencia, atención, ternura y respeto. Su bienestar emocional y físico siempre es prioridad.",
-              "Le amo desde 3 pilares fundamentales:",
+              "A la Josius Adorabilis no se le ama a medias. Se le ama con paciencia, atención, ternura y respeto. Su bienestar emocional y físico siempre es prioridad.",
+              "Debe ser desde desde 3 pilares fundamentales:",
             ],
             lista: [
               "Atracción: me parece la persona más hermosa en la faz de la tierra.",
@@ -431,7 +429,7 @@ const LIBRARY_CONFIG = {
             icon: "🔬", titulo: "Observaciones de campo",
             campos: [
               ["Vocación detectada", "Quiere estudiar medicina (curiosamente, quiere curar a otras especies)."],
-              ["Conocimiento especial", "Domina el arte de los alimentos: hizo un técnico en ello."],
+              ["Conocimiento especial", "Domina el arte de los alimentos: al parecer ha estudiado bastante sobre ello."],
               ["Medidas del espécimen", "XS en top (excepto algunos t-shirts oversize) · pantalón de tiro bajo y suelto."],
               ["Pintura de guerra", "C14 en rubor."],
               ["Marcas distintivas", "Un lunar en el hombro derecho."],
@@ -454,7 +452,7 @@ const LIBRARY_CONFIG = {
               ["Territorios narrativos", "Terror 😱 y fantasía 🧚"],
               ["Avistamientos en pantalla", "Welcome to Derry · Los Juegos del Hambre · Bridgerton · Grey's Anatomy"],
               ["Animes en observación", "Black Clover · Kimetsu no Yaiba · Solo Leveling (no anda viendo muchos)"],
-              ["Hábitos de lectura", "Actualmente lee 'Alas de Ónix'. Recolecta sus libros en SDQ. Su género favorito es la fantasía."],
+              ["Hábitos de lectura", "Actualmente lee 'Alas de Ónix'"],
               ["Cantos que la hipnotizan", "BTS (en especial Yoongi) · Milo J · Humbe · Isabel Valdez"],
               ["Rituales competitivos que sigue", "Fórmula 1 (Max Verstappen lover) 🏎 · Béisbol (liceísta hasta la médula 🐯)"],
             ],
@@ -485,9 +483,9 @@ const LIBRARY_CONFIG = {
                 lista: ["Mejor amiga: Mila", "Mejor amigo: Yoniel", "Amiga muy cercana: Angélica"] },
               { sub: "La manada principal",
                 lista: [
-                  "Sobrina: Ana — su adoración (cumple el 29 de diciembre, tiene 4 años)",
-                  "Sobrina más pequeña: Anahia (1 año)",
-                  "Su papá: 'Nenito' (cumple el 30 de diciembre)",
+                  "Sobrina: Ana — su adoración",
+                  "Sobrina más pequeña: Anahia",
+                  "Su papá: 'Nenito' ",
                   "Su mamá: Roberta",
                   "Hermano mayor: Josías (la saga Souls y los videojuegos; estudia lo mismo que yo)",
                   "Hermano menor: Uzías (le gusta Fortnite)",
@@ -553,9 +551,9 @@ const LIBRARY_CONFIG = {
       explain: {
         sprite: "assets/sprites/Singing_Me.png",
         lines: [
-          "Hay canciones que dejan de ser canciones.",
-          "Y se convierten en recuerdos.",
-          "Muchas de estas tienen tu nombre.",
+          "Aquí puedes encontrar las diferentes canciones que nos representan.",
+          "Algunas que te dedico.",
+          "O algunos audios nuestrossss.",
         ],
       },
 
@@ -587,7 +585,7 @@ const LIBRARY_CONFIG = {
         lines: [
           "Ese libro apareció de la nada.",
           "Pero siempre me daban toques eléctricos al tocarlo.",
-          "Supongo que no funciona ese intento.",
+          "Supongo que no funciona ese tieto.",
         ],
       },
     },
@@ -607,6 +605,7 @@ const LIBRARY_CONFIG = {
           "Este libro tiene un problema.",
           "Cada vez que creo haberlo terminado...",
           "Encuentro otra razón y vuelvo a escribir.",
+         "Lit, es demasiado corto para todo lo que quiero decir.",
         ],
       },
 
@@ -734,7 +733,7 @@ const LIBRARY_CONFIG = {
         sprite: "assets/sprites/Showing_Me.png",
         lines: [
           "Este libro todavía no está terminado.",
-          "Porque algunas de nuestras mejores historias aún no han ocurrido.",
+          "Pero va a ir desbloqueandose atravez del tiempo",
           "Y creo que eso es lo más bonito.",
         ],
       },
