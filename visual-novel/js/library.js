@@ -22,7 +22,9 @@ const LIBRARY_CONFIG = {
     ids: ["estante", "album", "manual", "disco", "razones"],
     lines: [
       "Hola... así que encontraste los conejitos.",
-      "No quise despertarte tristeza ni nada parecido, pero quiero expresar lo mucho que me duele no haberle conocido.",
+       "No se si los notaste pero son inspirados en Hope.",
+       "Me pareció una buena forma de inmortalizar a esa mascota que tanto quisiste.",
+      "No quiero despertarte tristeza ni nada parecido, solo quiero expresar lo mucho que me duele no haberle conocido.",
       "Seguro le hubiera acariciado mucho y nos llevaríamos bien...",
       "Era un gran conejo. Y ha de estar dando saltitos en el cielo, amando todo lo que hiciste por él.",
     ],
@@ -39,6 +41,7 @@ const LIBRARY_CONFIG = {
       "Todavía no entiendo cómo ese prieto escribió tantas páginas.",
       "*mueve la naricita*",
       "Donde entra un tijerazo entra un pincel, decía mi abuelo.",
+      "Te amo mamá, y siempre te amaré.",
     ],
   },
 
