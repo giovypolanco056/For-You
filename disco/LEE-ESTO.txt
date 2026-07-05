@@ -1,20 +1,25 @@
 💿 CARPETA: disco
 ================================
 
-Aquí van las canciones y las portadas del "Tocadiscos" (Libro 4).
+Aquí van las canciones y la portada del "Tocadiscos" (Libro 4).
 
-CÓMO AGREGAR CANCIONES:
-1. Copia dentro de esta carpeta:
-   - El audio de la canción (mp3, m4a, ogg...).
-   - La portada de la canción (jpg, png...).
-2. Abre el archivo:  visual-novel/js/library.js
-3. Busca la sección "TOCADISCOS (Libro 4)" y llena cada disco así:
+ESTADO ACTUAL (ya integrado en la página):
+- portada_1.jpg ............ portada de TODAS las canciones
+- josi_beso.ogg ............ Josi cantando "Beso" (Josean Log)
+- josi_astros.ogg .......... Josi cantando "Astros" (Humbe)
+- josi_llora.ogg ........... Josi cantando "Llora Llora" (Milo J)
+- misael_a_tu_altura.mp3 ... "A Tu Altura" (Misael Soul) - te la dedicó
+- humbe_te_lo_prometo.mp3 .. "Te Lo Prometo" (Humbe) - primera que te recomendó
 
-   { title: "Nombre de la canción",
-     artist: "Artista",
-     cover: "../disco/portada.jpg",
-     audio: "../disco/cancion.mp3",
-     story: "Por qué elegiste esta canción." }
+FALTA:
+- iglesia_arrebatada.mp3 ... "La Iglesia será arrebatada" (primera que le pediste
+  cantar). El archivo original llegó VACÍO (0 bytes). Vuelve a exportarlo con ese
+  nombre exacto y colócalo aquí; la página ya lo está esperando.
 
-Los discos ya están creados con sus nombres. Solo agrega cover, audio e historia.
-Si una canción no tiene audio todavía, igual se mostrará su historia.
+⚠ IMPORTANTE — iPhone / Safari:
+Las 3 grabaciones de la voz de Josi están en .ogg, que NO se reproduce en
+iPhone ni en Safari (sí en Android, Chrome y computadora). Si ella usa iPhone,
+expórtalas como .mp3 o .m4a con estos nombres y avísame para reconectarlas:
+  josi_beso.mp3 · josi_astros.mp3 · josi_llora.mp3
+
+Para cambiar historias o portadas: visual-novel/js/library.js, sección "TOCADISCOS".

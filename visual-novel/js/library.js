@@ -373,7 +373,7 @@ const LIBRARY_CONFIG = {
       // Apariencia: libreta negra con notas adhesivas
       appearance: { c1: "#2b2b30", c2: "#141416", ink: "#f3e6cf", w: 125, h: 185, sticky: true },
       explain: {
-        sprite: "assets/sprites/Talking3_Me.png",
+        sprite: "assets/sprites/Explorer_Me.png",
         lines: [
           "Este probablemente sea el libro más importante.",
           "Aunque técnicamente no es un libro.",
@@ -560,16 +560,38 @@ const LIBRARY_CONFIG = {
         ],
       },
 
-      // ► AGREGA AUDIO Y PORTADAS. Copia los archivos en la carpeta
-      //   "disco" y llena cover/audio/story de cada canción.
-      //   cover y audio son opcionales; si faltan, igual se muestra la historia.
+      // La portada de todas las canciones es la misma (portada_1.jpg).
       discs: [
-        { title: "La canción con la que le dijiste te amo", artist: "", cover: "", audio: "", story: "" },
-        { title: "Cars Outside", artist: "", cover: "", audio: "", story: "" },
-        { title: "BTS", artist: "", cover: "", audio: "", story: "" },
-        { title: "Canciones que te recuerdan a ella", artist: "", cover: "", audio: "", story: "" },
-        { title: "Canciones del futuro", artist: "", cover: "", audio: "", story: "" },
-        { title: "Canciones de Navidad", artist: "", cover: "", audio: "", story: "" },
+        {
+          title: "Beso", artist: "Josean Log · cantada por Josi",
+          cover: "../disco/portada_1.jpg", audio: "../disco/josi_beso.ogg",
+          story: "Esta eres tú, cantando 'Beso' de Josean Log. Tu voz es de los sonidos que más quiero en el mundo.",
+        },
+        {
+          title: "Astros", artist: "Humbe · cantada por Josi",
+          cover: "../disco/portada_1.jpg", audio: "../disco/josi_astros.ogg",
+          story: "Tú cantando 'Astros' de Humbe. La guardé para volver a escucharte cuando te extraño.",
+        },
+        {
+          title: "Llora Llora", artist: "Milo J · cantada por Josi",
+          cover: "../disco/portada_1.jpg", audio: "../disco/josi_llora.ogg",
+          story: "Tú cantando 'Llora Llora' de Milo J. Podría escucharte cantar para siempre.",
+        },
+        {
+          title: "A Tu Altura", artist: "Misael Soul",
+          cover: "../disco/portada_1.jpg", audio: "../disco/misael_a_tu_altura.mp3",
+          story: "Una canción que me dedicaste. Cada vez que suena vuelvo exactamente a ese momento contigo.",
+        },
+        {
+          title: "La Iglesia será arrebatada", artist: "",
+          cover: "../disco/portada_1.jpg", audio: "../disco/iglesia_arrebatada.mp3",
+          story: "La primera canción que te pedí que cantaras. Ahí supe que tu voz se me iba a quedar para siempre.",
+        },
+        {
+          title: "Te Lo Prometo", artist: "Humbe",
+          cover: "../disco/portada_1.jpg", audio: "../disco/humbe_te_lo_prometo.mp3",
+          story: "La primera canción que me recomendaste. Desde entonces empezamos a compartirnos música.",
+        },
       ],
     },
 
