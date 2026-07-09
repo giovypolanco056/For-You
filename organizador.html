@@ -102,7 +102,7 @@
     const albumBook = LIBRARY_CONFIG.books.find(b => b.id === 'album');
     const statusEl = document.getElementById('status');
 
-    // Estado: lista de secciones {name, photos:[{src,date,story}]}
+    // Estado: lista de secciones {name, photos:[{src,tag,story}]}
     let sections;
 
     // Cargar borrador local o partir de la config actual
@@ -114,7 +114,9 @@
     if (!sections) {
       sections = albumBook.sections.map(s => ({
         name: s.name,
-        photos: s.photos.map(p => ({ src: p.src, date: p.date || '', story: p.story || '' })),
+        // "tag" = elemento distintivo (ubicación, categoría, recuerdo...).
+        // Si una foto vieja solo tenía "date", lo usamos como etiqueta inicial.
+        photos: s.photos.map(p => ({ src: p.src, tag: p.tag || p.date || '', story: p.story || '' })),
       }));
     }
 
@@ -175,11 +177,11 @@
           });
           card.appendChild(sel);
 
-          const date = document.createElement('input');
-          date.placeholder = 'fecha (ej: mayo 2026)';
-          date.value = photo.date;
-          date.addEventListener('input', () => { photo.date = date.value; save(); });
-          card.appendChild(date);
+          const tag = document.createElement('input');
+          tag.placeholder = 'etiqueta (ubicación, recuerdo, evento...)';
+          tag.value = photo.tag;
+          tag.addEventListener('input', () => { photo.tag = tag.value; save(); });
+          card.appendChild(tag);
 
           const story = document.createElement('textarea');
           story.placeholder = 'historia de esta foto...';
@@ -208,7 +210,7 @@
         L.push(`          name: "${esc(sec.name)}",`);
         L.push('          photos: [');
         sec.photos.forEach(p => {
-          L.push(`            { src: "${esc(p.src)}", date: "${esc(p.date)}", story: "${esc(p.story)}" },`);
+          L.push(`            { src: "${esc(p.src)}", tag: "${esc(p.tag)}", story: "${esc(p.story)}" },`);
         });
         L.push('          ],');
         L.push('        },');
