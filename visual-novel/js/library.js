@@ -669,22 +669,26 @@ const LIBRARY_CONFIG = {
       ],
     },
 
-    /* ── 🚫 5. CÓMO DEJAR DE AMARTE (error) ──────────────────── */
+    /* ── 📊 5. ESTADÍSTICAS DE PAREJA ────────────────────────── */
     {
-      id: "stop",
-      type: "error",
-      title: "Cómo dejar de amarte",
-      emoji: "🚫",
-      description: "Investigación inconclusa.",
-      // Apariencia: gris, desgastado
-      appearance: { c1: "#5c5c60", c2: "#3a3a3e", ink: "#d8d8d8", w: 118, h: 178 },
-      // El contenido y el auto-cierre están definidos en el motor.
+      id: "stats",
+      type: "pdf",   // reutiliza el visor con iframe + botón "abrir aparte"
+      title: "Estadísticas de pareja",
+      emoji: "📊",
+      description: "Nuestra historia contada en datos.",
+      // Apariencia: libro de datos, azul petróleo con letras turquesa
+      appearance: { c1: "#123640", c2: "#0a1c24", ink: "#7fe0d4", w: 128, h: 192 },
+      // Abre la app de estadísticas embebida (sin cromo). El chat en crudo
+      // NO se publica: solo se muestran cifras y gráficas ya calculadas.
+      url: "../estadisticas/?embed=1",
       explain: {
-        sprite: "assets/sprites/Thinking_Me.png",
+        sprite: "assets/sprites/Showing_Me.png",
         lines: [
-          "Ese libro apareció de la nada.",
-          "Pero siempre me daban toques eléctricos al tocarlo.",
-          "Supongo que no funciona ese tieto.",
+          "Ahora este es especial.",
+          "Me puse a contar... TODO.",
+          "Cada mensaje, cada 'te amo', cada madrugada que nos quedamos hablando.",
+          "Lo convertí en números y gráficas para que veas de qué tamaño es lo nuestro.",
+          "Spoiler: es enorme.",
         ],
       },
     },
