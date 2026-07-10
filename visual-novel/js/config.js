@@ -425,7 +425,7 @@ const SCENES = [
     musicShift: null,
     dialog: [
       "Cuando veas esto seguramente ya habrá pasado el día de nuestro aniversario",
-      "Pero ya que el Giovy de verdad te dió sus flores pues yo tambien te regalo una mia",
+      "Pero ya que el Giovy de verdad no te ha dado flores pues me adelanto y te doy la mia",
     ],
   },
 
@@ -455,7 +455,7 @@ const SCENES = [
     effects: [],
     musicShift: null,
     dialog: [
-      "Aunque no lo puedo asegurar, pero apuesto mis kojimas virtuales a que te quillaste conmigo durante el viaje por algún motivo.",
+      "Aunque no lo puedo asegurar, pero apuesto mis kojimas virtuales a que te quillaste conmigo en estos días por algún motivo.",
     ],
   },
 
