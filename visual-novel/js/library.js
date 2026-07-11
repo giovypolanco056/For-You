@@ -837,8 +837,114 @@ const LIBRARY_CONFIG = {
 
       // ► Cada capítulo se desbloquea un sábado (año, mes-1, día).
       //   Antes de su fecha aparece cerrado con candado.
+      //   Si un capítulo tiene "content", al abrirlo se lee como una carta
+      //   (formato de libro). Si solo tiene "body", se muestra breve.
       chapters: [
-        { title: "Capítulo 9",  body: "Nuestro segundo aniversario.",     unlock: new Date(2026, 6, 11) },
+        {
+          title: "Capítulo 9",
+          unlock: new Date(2026, 6, 11),
+          content: {
+            numeral: "Capítulo IX",
+            title: "Más allá de un número",
+            body:
+`No sé exactamente en qué momento estarás leyendo esto.
+Quizás las notas de las pruebas nacionales ya salieron.
+Quizás todavía faltan unas horas.
+O quizás, mientras lees estas líneas, sigues ahí, mirando una pantalla, esperando ese número que aún no aparece.
+Pero hay algo que sí sé.
+Llevas días con esto en la cabeza.
+Y aunque intentes hacerte la fuerte, aunque me digas que estás bien, yo te conozco demasiado como para creértelo del todo.
+Sé que una parte de ti tiene miedo.
+Miedo de no haber hecho lo suficiente.
+Miedo de que el resultado no sea el que esperas.
+Miedo de sentir que todo este tiempo, todo tu esfuerzo, todas esas noches, terminen resumidos en una simple calificación.
+Y, sinceramente…
+Lo entiendo.
+Porque cuando ponemos tanto de nosotros en algo, es imposible no querer que salga bien.
+Es normal sentir nervios.
+Es normal dudar.
+Es normal querer llorar antes de tiempo.
+Pero hay algo que llevo demasiado tiempo queriendo decirte.
+Yo confío completamente en ti.
+Y ojalá algún día aprendas a confiar en ti con la misma facilidad con la que yo lo hago.
+Porque yo he tenido el privilegio de conocerte de una forma que ninguna prueba nacional podría hacerlo jamás.
+---
+Yo te he visto esforzarte incluso cuando nadie te estaba mirando.
+Te he visto frustrarte porque sentías que podías hacerlo mejor.
+Te he visto buscar entender las cosas en lugar de solo memorizarlas.
+He escuchado la curiosidad con la que preguntas.
+He notado la responsabilidad con la que cargas cada compromiso, aunque nadie te lo agradezca.
+Y todas esas cosas…
+No nacieron el día del examen.
+Ya estaban dentro de ti desde mucho antes.
+Por eso quiero que recuerdes algo.
+Una prueba nacional puede medir cuánto recuerdas de ciertas materias.
+Puede decir si acertaste o fallaste determinadas preguntas.
+Puede colocarte un número.
+Pero jamás podrá medir quién eres.
+No puede medir tu bondad.
+No puede medir la paz que transmites.
+No puede medir tu forma de amar.
+No puede medir tu empatía.
+No puede medir tu fe.
+No puede medir esa manera tan tuya de hacer sentir importantes a las personas que quieres.
+Y mucho menos puede medir el tamaño de tu corazón, ni toda esa inteligencia que existe fuera de un salón de clases.
+---
+Porque ser inteligente nunca ha significado únicamente responder bien un examen.
+Ser inteligente también es aprender de los errores.
+Es escuchar.
+Es comprender.
+Es adaptarse.
+Es levantarse después de caer.
+Es seguir caminando incluso cuando las cosas no salen como esperabas.
+Y tú haces todo eso.
+Lo haces todos los días, aunque no te des cuenta.
+¿Te acuerdas de la ballena? La que canta en una frecuencia distinta a todas las demás.
+Esa que sigue avanzando por el océano llevando dentro una voz hermosa, aunque a veces sienta que nadie la escucha.
+Pues eso también pasa con las notas.
+Un examen es un océano lleno de otras voces, y a veces uno teme que la suya no alcance, que su frecuencia no sea la correcta, que nadie logre medir lo que de verdad lleva dentro.
+Pero yo sí te escucho.
+Y te aseguro que tu canción nunca ha necesitado un número para ser hermosa.
+---
+Tal vez mañana veas una nota que te haga sonreír.
+Y si eso pasa, créeme que voy a sentirme inmensamente orgulloso de ti.
+Pero no porque una hoja haya decidido decirme que eres inteligente.
+Voy a sentirme orgulloso porque conozco todo lo que hubo detrás.
+Porque yo estuve ahí, del otro lado del teléfono, viéndote intentarlo.
+Y si por alguna razón la nota no es la que esperabas…
+Entonces quiero que vuelvas a leer estas páginas.
+Porque necesito que recuerdes algo muy importante.
+Un número jamás va a tener autoridad para decidir cuánto vales.
+Jamás.
+Ni el más alto podrá resumir todo lo que eres.
+Ni el más bajo podrá quitarte todo lo que ya has demostrado ser.
+Intentar describirte con una calificación sería como intentar guardar el océano dentro de un vaso.
+Simplemente…
+No cabe.
+Porque tú eres muchísimo más grande que cualquier examen.
+Muchísimo más que cualquier promedio.
+Muchísimo más que cualquier resultado.
+---
+Así que, cuando finalmente llegue ese momento…
+Respira.
+Mira la pantalla.
+Celebra si es una buena noticia.
+Y si no lo es, permítete sentirlo por un rato. Llora si tienes que llorar. Yo voy a estar ahí, aunque sea a través de una llamada, aunque sea con un simple "¿estás bien, morena?".
+Pero no dejes que ese número hable más fuerte que todas las personas que creen en ti.
+Y, sobre todo…
+No permitas que hable más fuerte que tú misma.
+Porque antes de hacer ese examen…
+Ya eras inteligente.
+Ya eras capaz.
+Ya eras admirable.
+Y después de conocer el resultado…
+Seguirás siendo exactamente la misma mujer increíble de la que yo me enamoré.
+Y eso…
+Ninguna prueba del mundo podrá cambiarlo jamás.
+> Pase lo que pase mañana, hoy ya te ganaste mi orgullo entero.
+> Y ese sí que no lo califica nadie.`
+          },
+        },
         { title: "Capítulo 10", body: "Nuestra primera Navidad en casa.", unlock: new Date(2026, 6, 18) },
         { title: "Capítulo 11", body: "El día que cumplimos la promesa.", unlock: new Date(2026, 6, 25) },
         { title: "Capítulo 12", body: "Lo logramos.",                     unlock: new Date(2026, 7, 1)  },
@@ -1439,6 +1545,16 @@ const LibraryEngine = (() => {
               <span class="lib-chapter-date">se abre el ${fechaBonita(ch.unlock)}</span>
             </div>
           </li>`;
+      } else if (ch.content) {
+        // Capítulo-carta: se abre a página completa (formato de libro)
+        html += `
+          <li class="lib-chapter lib-chapter-letter" data-ch="${i}">
+            <div class="lib-chapter-head">
+              <span class="lib-chapter-num">${i + 1}</span>
+              <span>${esc(ch.title)} — <em style="opacity:.8;">${esc(ch.content.title || '')}</em></span>
+              <span class="lib-chapter-arrow">❦</span>
+            </div>
+          </li>`;
       } else {
         const body = ch.body && ch.body.trim()
           ? esc(ch.body)
@@ -1457,9 +1573,17 @@ const LibraryEngine = (() => {
     html += `</ul>`;
     wrap.innerHTML = html;
 
-    wrap.querySelectorAll('.lib-chapter:not(.lib-chapter-locked) .lib-chapter-head').forEach(head => {
+    wrap.querySelectorAll('.lib-chapter:not(.lib-chapter-locked):not(.lib-chapter-letter) .lib-chapter-head').forEach(head => {
       head.addEventListener('click', () => {
         head.parentElement.classList.toggle('open');
+      });
+    });
+
+    // Capítulos-carta: abren la lectura a página completa
+    wrap.querySelectorAll('.lib-chapter-letter').forEach(li => {
+      li.addEventListener('click', () => {
+        const ch = book.chapters[parseInt(li.getAttribute('data-ch'), 10)];
+        openReader(book, renderLetterChapter(ch), 'lib-letter-panel');
       });
     });
 
@@ -1472,6 +1596,48 @@ const LibraryEngine = (() => {
       });
     });
 
+    return wrap;
+  }
+
+  /* ── Capítulo-carta: una carta con estética de libro ───────── */
+  function renderLetterChapter(ch) {
+    const c = ch.content || {};
+    const wrap = document.createElement('div');
+    wrap.className = 'lib-paper lib-letter';
+
+    let html = `
+      <div class="lc-head">
+        <div class="lc-numeral">${esc(c.numeral || ch.title || '')}</div>
+        <h2 class="lc-title">${esc(c.title || '')}</h2>
+        <div class="lc-crest">✦</div>
+      </div>
+      <div class="lc-body">`;
+
+    const lines = String(c.body || '').split('\n');
+    let quote = [];
+    let firstPara = true;
+    const flushQuote = () => {
+      if (quote.length) {
+        html += `<blockquote class="lc-quote">${quote.map(esc).join('<br>')}</blockquote>`;
+        quote = [];
+      }
+    };
+
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (!line) continue;
+      if (line === '---') { flushQuote(); html += `<div class="lc-divider"><span>❧</span></div>`; continue; }
+      if (line.startsWith('>')) { quote.push(line.replace(/^>\s?/, '').replace(/^["“]|["”]$/g, '').trim()); continue; }
+      flushQuote();
+      html += `<p class="lc-p${firstPara ? ' lc-first' : ''}">${esc(line)}</p>`;
+      firstPara = false;
+    }
+    flushQuote();
+
+    html += `
+        <div class="lc-sign">— con todo mi orgullo, tu Moreno</div>
+      </div>`;
+    wrap.innerHTML = html;
     return wrap;
   }
 
