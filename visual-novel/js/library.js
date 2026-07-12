@@ -906,7 +906,7 @@ Un examen es un océano lleno de otras voces, y a veces uno teme que la suya no 
 Pero yo sí te escucho.
 Y te aseguro que tu canción nunca ha necesitado un número para ser hermosa.
 ---
-Tal vez mañana veas una nota que te haga sonreír.
+Tal vez veas una nota que te haga sonreír.
 Y si eso pasa, créeme que voy a sentirme inmensamente orgulloso de ti.
 Pero no porque una hoja haya decidido decirme que eres inteligente.
 Voy a sentirme orgulloso porque conozco todo lo que hubo detrás.
