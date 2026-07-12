@@ -941,7 +941,7 @@ Y después de conocer el resultado…
 Seguirás siendo exactamente la misma mujer increíble de la que yo me enamoré.
 Y eso…
 Ninguna prueba del mundo podrá cambiarlo jamás.
-> Pase lo que pase mañana, hoy ya te ganaste mi orgullo entero.
+> Pase lo que pase en la prueba, hoy ya te ganaste mi orgullo entero.
 > Y ese sí que no lo califica nadie.`
           },
         },
