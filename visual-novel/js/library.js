@@ -986,7 +986,7 @@ Ninguna prueba del mundo podrá cambiarlo jamás.
       ],
       note: "Este libro se abrirá cuando llegue el momento.",
       // Fecha de desbloqueo: 7 de diciembre de 2026 (año, mes-1, día)
-      unlockDate: new Date(2026, 10, 26, 0, 0, 0),
+      unlockDate: new Date(2026, 10, 25, 0, 0, 0),
       // Mensaje cuando ya esté desbloqueado:
       unlockedContent: "Llegó el momento.\n\n(Aquí irá lo que este libro guardaba para ti.)",
     },
